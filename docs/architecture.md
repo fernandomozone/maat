@@ -35,6 +35,9 @@ Quando duas escolhas colidem, ganha a que está mais acima.
 | Autenticação | **Sessão no servidor**: identificador opaco em cookie `httpOnly`, palavras-passe com Argon2 | "Sair" tem de ser verdade; não há serviços distribuídos que justifiquem JWT |
 | Email | imapflow (IMAP), nodemailer (SMTP), mailparser (MIME) | IDLE, CONDSTORE e QRESYNC; o ecossistema mais completo |
 | Calendário | tsdav (CalDAV e CardDAV), ical.js (iCalendar e recorrências) | |
+| Tarefas em segundo plano | pg-boss | Corre sobre o próprio PostgreSQL: sem Redis, um serviço a menos |
+| Tempo real no browser | WebSocket no Fastify, alimentado por `LISTEN/NOTIFY` do PostgreSQL | Email novo e mensagens de chat chegam ao ecrã sem recarregar |
+| Credenciais IMAP/SMTP | Cifradas na base de dados, com a chave guardada fora dela | Guardamos credenciais de terceiros: uma cópia da base de dados sozinha não as revela |
 | Testes | Vitest e Playwright | |
 | Operação | Docker Compose | |
 
@@ -57,14 +60,9 @@ O mesmo código, com dois pontos de entrada:
 - **API**: o Fastify que serve o frontend e a API.
 - **Sincronização**: um processo à parte que mantém as ligações IMAP abertas (IDLE), sincroniza calendários e envia email. Assim, uma conta lenta ou com erro não pesa na API.
 
-### 5. A confirmar
+### 5. Por decidir
 
-Fazem parte da proposta, mas ainda não estão decididos:
-
-- **Tarefas em segundo plano** com o pg-boss, sobre o próprio PostgreSQL, sem Redis.
-- **Tempo real no browser** (email novo, chat) com WebSocket no Fastify e `LISTEN/NOTIFY` do PostgreSQL.
-- **Palavras-passe IMAP cifradas** na base de dados, com a chave fora dela. É a diferença de segurança mais séria: guardamos credenciais de terceiros.
-- **Armazenamento de ficheiros S3**: Garage, SeaweedFS ou Object Storage da Hetzner.
+- **Armazenamento de ficheiros.** A Maat é distribuída como um projeto em Docker Compose, instalado num servidor próprio. Não se usa armazenamento gerido de terceiros.
 
 ### 6. Boas práticas
 
@@ -107,6 +105,9 @@ When two choices collide, the higher one wins.
 | Authentication | **Server-side session**: opaque identifier in an `httpOnly` cookie, passwords hashed with Argon2 | "Log out" must be true; there are no distributed services that would justify JWT |
 | Email | imapflow (IMAP), nodemailer (SMTP), mailparser (MIME) | IDLE, CONDSTORE and QRESYNC; the most complete ecosystem |
 | Calendar | tsdav (CalDAV and CardDAV), ical.js (iCalendar and recurrence) | |
+| Background jobs | pg-boss | Runs on PostgreSQL itself: no Redis, one service fewer |
+| Real-time in the browser | WebSocket in Fastify, fed by PostgreSQL `LISTEN/NOTIFY` | New mail and chat messages reach the screen without reloading |
+| IMAP/SMTP credentials | Encrypted in the database, with the key kept outside it | We store third-party credentials: a copy of the database alone does not reveal them |
 | Tests | Vitest and Playwright | |
 | Operations | Docker Compose | |
 
@@ -129,14 +130,9 @@ The same codebase, with two entry points:
 - **API**: the Fastify server for the frontend and the API.
 - **Sync**: a separate process that keeps IMAP connections open (IDLE), syncs calendars and sends mail. A slow or failing account does not weigh on the API.
 
-### 5. To be confirmed
+### 5. Still open
 
-Part of the proposal, but not yet decided:
-
-- **Background jobs** with pg-boss, on PostgreSQL itself, without Redis.
-- **Real-time updates in the browser** (new mail, chat) with WebSocket in Fastify and PostgreSQL `LISTEN/NOTIFY`.
-- **Encrypted IMAP passwords** in the database, with the key kept outside it. This is the most serious security difference: we store third-party credentials.
-- **S3 file storage**: Garage, SeaweedFS or Hetzner Object Storage.
+- **File storage.** Maat ships as a Docker Compose project installed on one's own server. Managed third-party storage is not used.
 
 ### 6. Good practices
 

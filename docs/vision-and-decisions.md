@@ -60,7 +60,7 @@ Exemplos:
 
 - **Modelo de distribuição.** Instalação pelo próprio cliente, alojamento gerido com uma instalação por cliente, ou plataforma multi-empresa. Por decidir depois de a plataforma estar em uso.
 - **Tecnologia do chat interno.** Construído de raiz ou sobre um protocolo existente (por exemplo Matrix, o que facilitaria ligar WhatsApp e Telegram mais tarde).
-- **Pontos da stack por confirmar**: tarefas em segundo plano (pg-boss), tempo real no browser (WebSocket + `LISTEN/NOTIFY`), cifra das palavras-passe IMAP e armazenamento de ficheiros S3. Ver a secção 5 de [architecture.md](architecture.md).
+- **Armazenamento de ficheiros.** Ver a secção 5 de [architecture.md](architecture.md).
 - **Ordem exata das fases** de construção.
 - **Língua da interface** e suporte a traduções.
 - **Licença** do projeto.
@@ -123,7 +123,7 @@ Examples:
 
 - **Distribution model.** Self-installed by the customer, managed hosting with one instance per customer, or a multi-tenant platform. To be decided once the platform is in use.
 - **Internal chat technology.** Built from scratch or on an existing protocol (for example Matrix, which would make connecting WhatsApp and Telegram easier later).
-- **Stack items to confirm**: background jobs (pg-boss), real-time updates in the browser (WebSocket + `LISTEN/NOTIFY`), IMAP password encryption and S3 file storage. See section 5 of [architecture.md](architecture.md).
+- **File storage.** See section 5 of [architecture.md](architecture.md).
 - **Exact order of build phases.**
 - **Interface language** and translation support.
 - **Project license.**
