@@ -28,9 +28,15 @@ Build order: follow the phases in [docs/roadmap.md](docs/roadmap.md), one at a t
 - Internal chat runs on a self-hosted Matrix server **without end-to-end encryption**; Maat is a Matrix client that stores the index and links. Server choice and login integration are decided at the start of Phase 6.
 - Keep account authentication separate from the mail protocol code so OAuth can be added later.
 
+## Users and security
+
+- Read [docs/security.md](docs/security.md) before touching authentication, sessions, access control, RLS, credentials, files, audit or backups. A phase does not close while its controls there are unproven.
+- One account belongs to one organization. Departments and teams up to two levels; team heads see their team's work and shared mailboxes, never personal mailboxes.
+- Never write email or message content to the audit log or to application logs.
+
 ## Out of scope for now
 
-WhatsApp and Telegram integration, Git hosting, Google and Microsoft (OAuth) accounts. Do not add these unless the decision record changes.
+WhatsApp and Telegram integration, Git hosting, Google and Microsoft (OAuth) accounts, Active Directory/LDAP, passkeys, one account across several organizations. Do not add these unless the decision record changes.
 
 ## Repository hygiene
 

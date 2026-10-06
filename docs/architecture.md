@@ -33,15 +33,15 @@ Quando duas escolhas colidem, ganha a que está mais acima.
 | Interface | Tailwind, com as **variáveis do protótipo como tema**; modais e menus com o `<dialog>` do browser; sem biblioteca de componentes | O desenho é o do protótipo; o Tailwind é a forma de o aplicar |
 | Traduções | Textos da interface em ficheiros por língua, com chaves no código; pt-PT completo, as outras línguas recaem nele quando falta uma tradução. A biblioteca escolhe-se na Fase 0, com as quatro verificações | Acrescentar uma língua é traduzir um ficheiro, sem mexer no código. O pt-BR só precisa de traduzir o que difere do pt-PT |
 | Formulários | React Hook Form com os esquemas partilhados | A validação do ecrã é a mesma da API |
-| Autenticação | **Sessão no servidor**: identificador opaco em cookie `httpOnly`, palavras-passe com Argon2 | "Sair" tem de ser verdade; não há serviços distribuídos que justifiquem JWT |
+| Autenticação | **Sessão no servidor**: identificador opaco em cookie `httpOnly`, palavras-passe com Argon2, MFA por TOTP com códigos de recuperação | "Sair" tem de ser verdade; não há serviços distribuídos que justifiquem JWT |
 | Email | imapflow (IMAP), nodemailer (SMTP), mailparser (MIME) | IDLE, CONDSTORE e QRESYNC; o ecossistema mais completo |
 | Calendário | tsdav (CalDAV e CardDAV), ical.js (iCalendar e recorrências) | |
 | Tarefas em segundo plano | pg-boss | Corre sobre o próprio PostgreSQL: sem Redis, um serviço a menos |
 | Tempo real no browser | WebSocket no Fastify, alimentado por `LISTEN/NOTIFY` do PostgreSQL | Email novo e mensagens de chat chegam ao ecrã sem recarregar |
-| Credenciais IMAP/SMTP | Cifradas na base de dados, com a chave guardada fora dela | Guardamos credenciais de terceiros: uma cópia da base de dados sozinha não as revela |
+| Credenciais IMAP/SMTP | Cifradas na base de dados; a chave é um segredo do Docker, fora da base de dados e fora do backup, com comando para a trocar | Guardamos credenciais de terceiros: uma cópia da base de dados sozinha não as revela |
 | Ficheiros | Disco do servidor, num volume Docker, atrás de uma interface própria de armazenamento (guardar, ler, apagar) | Como o Mailcow faz com o email: zero serviços extra, e a cópia de segurança é o volume mais o dump da base de dados. Se um dia for preciso S3, acrescenta-se outra implementação da interface sem mexer no resto |
 | Testes | Vitest e Playwright | |
-| Operação | Docker Compose, instalado num servidor próprio | Como o Mailcow: um projeto com todos os serviços em contentores. Sem armazenamento nem serviços geridos de terceiros |
+| Operação | Docker Compose, instalado num servidor próprio; proxy com HTTPS automático (desligável); scripts de backup e de atualização | Como o Mailcow: um projeto com todos os serviços em contentores. Sem armazenamento nem serviços geridos de terceiros |
 
 ### 3. Isolamento entre organizações
 
@@ -105,15 +105,15 @@ When two choices collide, the higher one wins.
 | Interface | Tailwind, with the **prototype's variables as the theme**; modals and menus with the browser's `<dialog>`; no component library | The design is the prototype's; Tailwind is how it is applied |
 | Translations | Interface text in per-language files, with keys in the code; pt-PT is complete and other languages fall back to it when a translation is missing. The library is chosen in Phase 0, with the four checks | Adding a language means translating a file, without touching code. pt-BR only needs to translate what differs from pt-PT |
 | Forms | React Hook Form with the shared schemas | UI validation is the same as the API's |
-| Authentication | **Server-side session**: opaque identifier in an `httpOnly` cookie, passwords hashed with Argon2 | "Log out" must be true; there are no distributed services that would justify JWT |
+| Authentication | **Server-side session**: opaque identifier in an `httpOnly` cookie, passwords hashed with Argon2, TOTP MFA with recovery codes | "Log out" must be true; there are no distributed services that would justify JWT |
 | Email | imapflow (IMAP), nodemailer (SMTP), mailparser (MIME) | IDLE, CONDSTORE and QRESYNC; the most complete ecosystem |
 | Calendar | tsdav (CalDAV and CardDAV), ical.js (iCalendar and recurrence) | |
 | Background jobs | pg-boss | Runs on PostgreSQL itself: no Redis, one service fewer |
 | Real-time in the browser | WebSocket in Fastify, fed by PostgreSQL `LISTEN/NOTIFY` | New mail and chat messages reach the screen without reloading |
-| IMAP/SMTP credentials | Encrypted in the database, with the key kept outside it | We store third-party credentials: a copy of the database alone does not reveal them |
+| IMAP/SMTP credentials | Encrypted in the database; the key is a Docker secret, outside the database and outside the backup, with a rotation command | We store third-party credentials: a copy of the database alone does not reveal them |
 | Files | Server disk, in a Docker volume, behind our own storage interface (put, get, delete) | Like Mailcow does with mail: no extra service, and backup is the volume plus the database dump. If S3 is ever needed, another implementation of the interface is added without touching the rest |
 | Tests | Vitest and Playwright | |
-| Operations | Docker Compose, installed on one's own server | Like Mailcow: one project with every service in containers. No managed third-party storage or services |
+| Operations | Docker Compose, installed on one's own server; reverse proxy with automatic HTTPS (can be disabled); backup and update scripts | Like Mailcow: one project with every service in containers. No managed third-party storage or services |
 
 ### 3. Isolation between organizations
 

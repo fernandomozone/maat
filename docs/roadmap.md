@@ -21,15 +21,19 @@ Ordem de construção da primeira versão, decidida a 2026-10-06 ([issue #4](htt
 - Isolamento entre organizações (RLS), com as provas automáticas descritas em [architecture.md](architecture.md).
 - O modelo de item e ligações.
 - A estrutura da interface: barra de módulos no topo, tema claro e escuro, procura global.
+- Departamentos e equipas, chefes, administrador da plataforma; MFA por TOTP; registo de auditoria.
+- Instalação: assistente no browser com código de instalação, proxy com HTTPS automático, scripts de backup e de atualização.
 
-**Feito quando:** se entra na Maat, a barra de módulos aparece, e a prova de isolamento passa (e falha quando se parte de propósito).
+**Feito quando:** a Maat se instala de raiz com o assistente, se entra com MFA, a barra de módulos aparece, um backup é restaurado com sucesso, e a prova de isolamento passa (e falha quando se parte de propósito).
 
 ### Fase 1: Email
 
-- Adicionar contas IMAP/SMTP, com credenciais cifradas.
+- **Primeiro passo: a medição da procura** (índice próprio ou pesquisa IMAP, incluindo anexos) com contas reais em Mailcow e cPanel. A decisão fica registada antes de construir a procura.
+- O administrador configura as contas IMAP/SMTP de cada pessoa, com credenciais cifradas; caixas partilhadas atribuídas a equipas.
 - Processo de sincronização com IDLE.
 - Pastas, lista, leitura, anexos, escrever, responder, arquivar.
 - Email novo aparece no ecrã sem recarregar.
+- HTML isolado; imagens externas bloqueadas, com "confiar neste domínio" por pessoa.
 - **Convites recebidos aparecem legíveis** (título, data, hora, local, organizador), em vez de um anexo `.ics` solto.
 
 **Feito quando:** uma conta real é trabalhada só na Maat, sem abrir outro cliente de email.
@@ -90,15 +94,19 @@ Build order for the first version, decided on 2026-10-06 ([issue #4](https://git
 - Isolation between organizations (RLS), with the automated proofs described in [architecture.md](architecture.md).
 - The item and link model.
 - The interface shell: module bar at the top, light and dark themes, global search.
+- Departments and teams, heads, platform administrator; TOTP MFA; audit log.
+- Installation: browser wizard with an installation code, reverse proxy with automatic HTTPS, backup and update scripts.
 
-**Done when:** you can log in to Maat, the module bar shows, and the isolation proof passes (and fails when deliberately broken).
+**Done when:** Maat installs from scratch with the wizard, you log in with MFA, the module bar shows, a backup is restored successfully, and the isolation proof passes (and fails when deliberately broken).
 
 ### Phase 1: Email
 
-- Add IMAP/SMTP accounts, with encrypted credentials.
+- **First step: the search measurement** (own index or IMAP search, including attachments) with real accounts on Mailcow and cPanel. The decision is recorded before building search.
+- The administrator sets up each person's IMAP/SMTP accounts, with encrypted credentials; shared mailboxes assigned to teams.
 - Sync process with IDLE.
 - Folders, list, reading, attachments, compose, reply, archive.
 - New mail appears on screen without reloading.
+- Isolated HTML; remote images blocked, with per-person "trust this domain".
 - **Received invitations are shown readably** (title, date, time, location, organizer) instead of as a bare `.ics` attachment.
 
 **Done when:** a real account is handled only in Maat, without opening another email client.

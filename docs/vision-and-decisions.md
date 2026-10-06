@@ -54,6 +54,40 @@ Exemplos:
 
 **Línguas.** Documentação em português e inglês no mesmo ficheiro; código em inglês. As instruções para agentes de IA ficam em `AGENTS.md` (em inglês); o projeto não usa `CLAUDE.md`.
 
+### Utilizadores, acesso e operação (2026-10-06)
+
+**Para quem.** Uma ferramenta empresarial: uma empresa com os seus funcionários. Quando entra alguém, o administrador cria o utilizador e a pessoa entra pela primeira vez com tudo pronto.
+
+**Estrutura da empresa.** Departamentos e equipas, em até dois níveis (por exemplo Comercial, com Equipa 1 e Equipa 2). Cada pessoa pertence a um ou mais. Cada departamento ou equipa pode ter um **chefe**, que vê as tarefas, tickets e projetos da sua equipa, atribui trabalho às pessoas dela e vê as caixas de email partilhadas da equipa. **Nunca vê caixas pessoais.**
+
+**Administrador da plataforma.** Papel à parte (pode ser o técnico de TI): gere utilizadores, estrutura, contas de email e definições.
+
+**Uma conta, uma empresa.** Quem trabalha para duas empresas tem duas contas.
+
+**Entrada.** Email e palavra-passe **próprios da Maat**, independentes da palavra-passe do email. MFA por **TOTP**, com códigos de recuperação. Cada empresa decide se o MFA é obrigatório para todos; para administradores é **sempre obrigatório**. Passkeys ficam para mais tarde.
+
+**Contas de email.** Configuradas pelo administrador ao criar o utilizador, **incluindo a palavra-passe da caixa**. As palavras-passe ficam cifradas; a chave é um segredo do Docker, fora da base de dados, com um comando para a trocar.
+
+**Caixas partilhadas** (como `suporte@`). Atribuídas a departamentos ou equipas. Mais tarde, também a pessoas concretas; o modelo de dados fica preparado para isso.
+
+**Procura.** Encontra emails pelo **assunto, conteúdo e anexos**. Se isso se faz com um índice próprio da Maat ou com a pesquisa do servidor IMAP decide-se por **medição**, no início da Fase 1, com contas reais. Uma segunda cópia do conteúdo dos emails só entra se os números a justificarem.
+
+**Emails em HTML.** Mostrados numa área isolada, sem scripts. **Imagens externas bloqueadas por omissão**, com "mostrar imagens" e "confiar neste domínio"; a lista de domínios de confiança é **de cada pessoa**.
+
+**Registo de auditoria.** Regista tudo o que altera dados (criar, alterar, apagar, converter) e as ações de administração e segurança, sem nunca guardar o conteúdo de emails ou mensagens. O administrador vê tudo; cada chefe vê o da sua equipa. O prazo é definido pela empresa, com 1 ano por omissão.
+
+**Segurança.** OWASP ASVS nível 2 como base, RGPD como obrigação, NIS2 como alinhamento. Ver [security.md](security.md).
+
+**Instalação.** Assistente no browser na primeira visita, protegido por um código de instalação que aparece no terminal. O assistente mostra a chave de cifra uma vez e pede para a guardar fora do servidor.
+
+**HTTPS.** Proxy incluído no Docker Compose, com certificados Let's Encrypt automáticos, que se pode desligar quando o servidor já tem outro proxy.
+
+**Cópias de segurança.** Ao estilo do Mailcow: um script faz o dump consistente da base de dados (e, a partir da Fase 6, da do Matrix), com retenção de N dias; as pastas de dados (anexos, documentos, imagens, ficheiros do chat) copiam-se com `rsync`, com um exemplo de `crontab` na documentação. A chave de cifra **não entra** no backup.
+
+**Atualizações.** Script que faz backup antes, descarrega a versão nova, aplica as migrações e reinicia.
+
+**Ideia para o futuro.** Ligação a um Active Directory local.
+
 ### Fora da primeira versão
 
 - **WhatsApp e Telegram.** Ficam para uma fase posterior. O WhatsApp não tem API oficial para contas pessoais e as integrações existentes podem partir com atualizações.
@@ -116,6 +150,40 @@ Examples:
 **Interface language (2026-10-06).** Maat launches in European Portuguese (pt-PT) only, but with interface text in a translation file from the very first screen: code uses keys, never hard-coded text. Later: English and possibly Brazilian Portuguese (pt-BR) as a separate language. Dates, times, numbers and time zones follow each user's settings.
 
 **Languages.** Documentation in Portuguese and English in the same file; code in English. Instructions for AI agents live in `AGENTS.md` (in English); the project does not use `CLAUDE.md`.
+
+### Users, access and operations (2026-10-06)
+
+**Who it is for.** A business tool: a company and its employees. When someone joins, the administrator creates the user and the person logs in for the first time with everything ready.
+
+**Company structure.** Departments and teams, up to two levels (for example Sales, with Team 1 and Team 2). Each person belongs to one or more. Each department or team can have a **head**, who sees the team's tasks, tickets and projects, assigns work to its people and sees the team's shared mailboxes. **Never personal mailboxes.**
+
+**Platform administrator.** A separate role (can be the IT technician): manages users, structure, email accounts and settings.
+
+**One account, one company.** Someone who works for two companies has two accounts.
+
+**Login.** Email and a **Maat-specific password**, independent of the mailbox password. MFA with **TOTP**, plus recovery codes. Each company decides whether MFA is mandatory for everyone; for administrators it is **always mandatory**. Passkeys come later.
+
+**Email accounts.** Set up by the administrator when creating the user, **including the mailbox password**. Passwords are stored encrypted; the key is a Docker secret, outside the database, with a command to rotate it.
+
+**Shared mailboxes** (such as `support@`). Assigned to departments or teams. Later, also to individual people; the data model is ready for that.
+
+**Search.** Finds emails by **subject, body and attachments**. Whether this uses Maat's own index or the IMAP server's search is decided by **measurement** at the start of Phase 1, with real accounts. A second copy of email content is only added if the numbers justify it.
+
+**HTML email.** Shown in an isolated area, without scripts. **Remote images blocked by default**, with "show images" and "trust this domain"; the trusted-domain list is **per person**.
+
+**Audit log.** Records everything that changes data (create, update, delete, convert) and administration and security actions, never storing the content of emails or messages. The administrator sees everything; each head sees their team's. Retention is set by the company, 1 year by default.
+
+**Security.** OWASP ASVS level 2 as the baseline, GDPR as an obligation, NIS2 as alignment. See [security.md](security.md).
+
+**Installation.** A browser wizard on the first visit, protected by an installation code shown in the terminal. The wizard shows the encryption key once and asks for it to be stored off the server.
+
+**HTTPS.** A reverse proxy included in Docker Compose, with automatic Let's Encrypt certificates, which can be disabled when the server already has another proxy.
+
+**Backups.** Mailcow-style: a script makes a consistent dump of the database (and, from Phase 6, the Matrix database), with N days of retention; data folders (attachments, documents, images, chat files) are copied with `rsync`, with an example `crontab` in the documentation. The encryption key is **not** included in the backup.
+
+**Updates.** A script that backs up first, downloads the new version, applies migrations and restarts.
+
+**Future idea.** Integration with an on-premises Active Directory.
 
 ### Out of the first version
 
