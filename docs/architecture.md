@@ -31,6 +31,7 @@ Quando duas escolhas colidem, ganha a que está mais acima.
 | Acesso a dados | `pg` com **SQL escrito à mão**, Zod a validar cada linha, migrações SQL numeradas | Sem ORM: o esquema da base de dados é a fonte, e o código só o lê. Evita a instabilidade atual dos ORMs em TypeScript |
 | Frontend | React com Vite, React Router, TanStack Query | Maduro; o TanStack Query dá a sensação de resposta imediata |
 | Interface | Tailwind, com as **variáveis do protótipo como tema**; modais e menus com o `<dialog>` do browser; sem biblioteca de componentes | O desenho é o do protótipo; o Tailwind é a forma de o aplicar |
+| Traduções | Textos da interface em ficheiros por língua, com chaves no código; pt-PT completo, as outras línguas recaem nele quando falta uma tradução. A biblioteca escolhe-se na Fase 0, com as quatro verificações | Acrescentar uma língua é traduzir um ficheiro, sem mexer no código. O pt-BR só precisa de traduzir o que difere do pt-PT |
 | Formulários | React Hook Form com os esquemas partilhados | A validação do ecrã é a mesma da API |
 | Autenticação | **Sessão no servidor**: identificador opaco em cookie `httpOnly`, palavras-passe com Argon2 | "Sair" tem de ser verdade; não há serviços distribuídos que justifiquem JWT |
 | Email | imapflow (IMAP), nodemailer (SMTP), mailparser (MIME) | IDLE, CONDSTORE e QRESYNC; o ecossistema mais completo |
@@ -102,6 +103,7 @@ When two choices collide, the higher one wins.
 | Data access | `pg` with **hand-written SQL**, Zod validating every row, numbered SQL migrations | No ORM: the database schema is the source and the code only reads it. Avoids today's churn in TypeScript ORMs |
 | Frontend | React with Vite, React Router, TanStack Query | Mature; TanStack Query makes the UI feel instant |
 | Interface | Tailwind, with the **prototype's variables as the theme**; modals and menus with the browser's `<dialog>`; no component library | The design is the prototype's; Tailwind is how it is applied |
+| Translations | Interface text in per-language files, with keys in the code; pt-PT is complete and other languages fall back to it when a translation is missing. The library is chosen in Phase 0, with the four checks | Adding a language means translating a file, without touching code. pt-BR only needs to translate what differs from pt-PT |
 | Forms | React Hook Form with the shared schemas | UI validation is the same as the API's |
 | Authentication | **Server-side session**: opaque identifier in an `httpOnly` cookie, passwords hashed with Argon2 | "Log out" must be true; there are no distributed services that would justify JWT |
 | Email | imapflow (IMAP), nodemailer (SMTP), mailparser (MIME) | IDLE, CONDSTORE and QRESYNC; the most complete ecosystem |

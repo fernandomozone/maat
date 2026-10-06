@@ -15,7 +15,7 @@ Build order: follow the phases in [docs/roadmap.md](docs/roadmap.md), one at a t
 - **Code is in English**: identifiers, file and folder names, comments, log messages, configuration keys, test names and commit messages.
 - **Documentation is bilingual**: every document (README, files in `docs/`) contains a Portuguese section followed by an English section in the same file, with language links at the top. Portuguese is European Portuguese (pt-PT). Keep both sections in sync; a change to one language is not complete until the other is updated.
 - **This file is English only.**
-- **User-facing interface text** in the prototype is in Portuguese (pt-PT). How the application handles UI languages is an open question; do not hard-code a decision.
+- **User-facing interface text** is never hard-coded: every string lives in the translation files and code references it by key (keys in English). pt-PT is the only complete language and the fallback; English and possibly pt-BR come later. Dates, times, numbers and time zones are formatted with the user's locale settings.
 
 ## Core design principles
 

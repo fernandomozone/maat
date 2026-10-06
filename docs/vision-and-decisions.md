@@ -50,6 +50,8 @@ Exemplos:
 
 **Layout.** O desenho da interface é o do protótipo e dos mockups do projeto (barra de módulos no topo, tema escuro e claro).
 
+**Língua da interface (2026-10-06).** A Maat lança só em português europeu (pt-PT), mas com os textos num ficheiro de traduções desde o primeiro ecrã: o código usa chaves, nunca texto escrito diretamente. No futuro: inglês e, talvez, português do Brasil (pt-BR) como língua separada. Datas, horas, números e fusos horários seguem as definições de cada utilizador.
+
 **Línguas.** Documentação em português e inglês no mesmo ficheiro; código em inglês. As instruções para agentes de IA ficam em `AGENTS.md` (em inglês); o projeto não usa `CLAUDE.md`.
 
 ### Fora da primeira versão
@@ -61,7 +63,6 @@ Exemplos:
 ### Questões em aberto
 
 - **Modelo de distribuição.** Instalação pelo próprio cliente, alojamento gerido com uma instalação por cliente, ou plataforma multi-empresa. Por decidir depois de a plataforma estar em uso.
-- **Língua da interface** e suporte a traduções.
 - **Licença** do projeto.
 
 ---
@@ -112,6 +113,8 @@ Examples:
 
 **Layout.** The interface design is the one in the project's prototype and mockups (module bar at the top, dark and light themes).
 
+**Interface language (2026-10-06).** Maat launches in European Portuguese (pt-PT) only, but with interface text in a translation file from the very first screen: code uses keys, never hard-coded text. Later: English and possibly Brazilian Portuguese (pt-BR) as a separate language. Dates, times, numbers and time zones follow each user's settings.
+
 **Languages.** Documentation in Portuguese and English in the same file; code in English. Instructions for AI agents live in `AGENTS.md` (in English); the project does not use `CLAUDE.md`.
 
 ### Out of the first version
@@ -123,5 +126,4 @@ Examples:
 ### Open questions
 
 - **Distribution model.** Self-installed by the customer, managed hosting with one instance per customer, or a multi-tenant platform. To be decided once the platform is in use.
-- **Interface language** and translation support.
 - **Project license.**
