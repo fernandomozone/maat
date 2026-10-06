@@ -36,6 +36,8 @@ Exemplos:
 
 **Email e chat separados.** O chat é só comunicação interna da equipa.
 
+**Chat sobre Matrix, sem cifra ponta a ponta (2026-10-06).** Um servidor Matrix próprio, no Docker Compose. A Maat é um cliente: as mensagens vivem no servidor Matrix e a Maat guarda o índice e as ligações. Ganha-se app de telemóvel (qualquer cliente Matrix) e o caminho para ligar WhatsApp e Telegram por bridges. Sem cifra ponta a ponta porque esta impediria a procura global e as ligações do lado do servidor; as mensagens continuam cifradas em trânsito (HTTPS) e ficam no servidor próprio. A escolha do servidor Matrix, o login único e a forma de impedir que as apps liguem a cifra por omissão ficam para o início da Fase 6.
+
 **Organização no modelo de dados desde o início.** Cada conta, projeto, ticket ou conversa pertence a uma organização, mesmo que no início só exista uma.
 
 **Self-hosted, empacotado em Docker Compose.**
@@ -59,7 +61,6 @@ Exemplos:
 ### Questões em aberto
 
 - **Modelo de distribuição.** Instalação pelo próprio cliente, alojamento gerido com uma instalação por cliente, ou plataforma multi-empresa. Por decidir depois de a plataforma estar em uso.
-- **Tecnologia do chat interno.** Construído de raiz ou sobre um protocolo existente (por exemplo Matrix, o que facilitaria ligar WhatsApp e Telegram mais tarde).
 - **Língua da interface** e suporte a traduções.
 - **Licença** do projeto.
 
@@ -97,6 +98,8 @@ Examples:
 
 **Email and chat kept separate.** Chat is internal team communication only.
 
+**Chat on Matrix, without end-to-end encryption (2026-10-06).** A self-hosted Matrix server in Docker Compose. Maat is a client: messages live on the Matrix server and Maat stores the index and links. This gives a mobile app (any Matrix client) and a path to connect WhatsApp and Telegram through bridges. No end-to-end encryption, because it would prevent global search and server-side links; messages are still encrypted in transit (HTTPS) and stay on one's own server. The choice of Matrix server, single sign-on and how to stop apps from enabling encryption by default are left for the start of Phase 6.
+
 **Organization in the data model from day one.** Every account, project, ticket or conversation belongs to an organization, even if only one exists at first.
 
 **Self-hosted, packaged with Docker Compose.**
@@ -120,6 +123,5 @@ Examples:
 ### Open questions
 
 - **Distribution model.** Self-installed by the customer, managed hosting with one instance per customer, or a multi-tenant platform. To be decided once the platform is in use.
-- **Internal chat technology.** Built from scratch or on an existing protocol (for example Matrix, which would make connecting WhatsApp and Telegram easier later).
 - **Interface language** and translation support.
 - **Project license.**

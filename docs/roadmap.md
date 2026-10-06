@@ -66,7 +66,7 @@ Ordem de construção da primeira versão, decidida a 2026-10-06 ([issue #4](htt
 
 ### Fase 6: Chat interno
 
-- Depende da decisão da [issue #2](https://github.com/fernandomozone/maat/issues/2).
+- Matrix sem cifra ponta a ponta ([issue #2](https://github.com/fernandomozone/maat/issues/2)). No início da fase: escolher o servidor Matrix, desenhar o login único e impedir que as apps liguem a cifra por omissão.
 - **Ligações:** converter uma mensagem em tarefa ou ticket.
 
 **Feito quando:** a equipa conversa na Maat em vez de noutra aplicação.
@@ -135,7 +135,7 @@ Build order for the first version, decided on 2026-10-06 ([issue #4](https://git
 
 ### Phase 6: Internal chat
 
-- Depends on the decision in [issue #2](https://github.com/fernandomozone/maat/issues/2).
+- Matrix without end-to-end encryption ([issue #2](https://github.com/fernandomozone/maat/issues/2)). At the start of the phase: choose the Matrix server, design single sign-on and stop apps from enabling encryption by default.
 - **Links:** convert a message into a task or ticket.
 
 **Done when:** the team talks in Maat instead of another app.

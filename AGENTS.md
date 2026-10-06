@@ -24,7 +24,8 @@ Build order: follow the phases in [docs/roadmap.md](docs/roadmap.md), one at a t
 - Everything is an **item** with an origin and links. Converting one item into another creates a new linked item; it never copies or moves the original.
 - Every record belongs to an **organization**, even while only one exists.
 - Maat is an **email client, not a mail server**. Mail stays on the IMAP server; Maat stores an index and links. Links reference the email's Message-ID, never its folder.
-- Integrate existing protocols and services (IMAP/SMTP, CalDAV) instead of rebuilding them.
+- Integrate existing protocols and services (IMAP/SMTP, CalDAV, Matrix) instead of rebuilding them.
+- Internal chat runs on a self-hosted Matrix server **without end-to-end encryption**; Maat is a Matrix client that stores the index and links. Server choice and login integration are decided at the start of Phase 6.
 - Keep account authentication separate from the mail protocol code so OAuth can be added later.
 
 ## Out of scope for now
