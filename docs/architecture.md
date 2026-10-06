@@ -38,8 +38,9 @@ Quando duas escolhas colidem, ganha a que está mais acima.
 | Tarefas em segundo plano | pg-boss | Corre sobre o próprio PostgreSQL: sem Redis, um serviço a menos |
 | Tempo real no browser | WebSocket no Fastify, alimentado por `LISTEN/NOTIFY` do PostgreSQL | Email novo e mensagens de chat chegam ao ecrã sem recarregar |
 | Credenciais IMAP/SMTP | Cifradas na base de dados, com a chave guardada fora dela | Guardamos credenciais de terceiros: uma cópia da base de dados sozinha não as revela |
+| Ficheiros | Disco do servidor, num volume Docker, atrás de uma interface própria de armazenamento (guardar, ler, apagar) | Como o Mailcow faz com o email: zero serviços extra, e a cópia de segurança é o volume mais o dump da base de dados. Se um dia for preciso S3, acrescenta-se outra implementação da interface sem mexer no resto |
 | Testes | Vitest e Playwright | |
-| Operação | Docker Compose | |
+| Operação | Docker Compose, instalado num servidor próprio | Como o Mailcow: um projeto com todos os serviços em contentores. Sem armazenamento nem serviços geridos de terceiros |
 
 ### 3. Isolamento entre organizações
 
@@ -62,7 +63,7 @@ O mesmo código, com dois pontos de entrada:
 
 ### 5. Por decidir
 
-- **Armazenamento de ficheiros.** A Maat é distribuída como um projeto em Docker Compose, instalado num servidor próprio. Não se usa armazenamento gerido de terceiros.
+Nada nesta camada. As questões de produto em aberto estão em [vision-and-decisions.md](vision-and-decisions.md).
 
 ### 6. Boas práticas
 
@@ -108,8 +109,9 @@ When two choices collide, the higher one wins.
 | Background jobs | pg-boss | Runs on PostgreSQL itself: no Redis, one service fewer |
 | Real-time in the browser | WebSocket in Fastify, fed by PostgreSQL `LISTEN/NOTIFY` | New mail and chat messages reach the screen without reloading |
 | IMAP/SMTP credentials | Encrypted in the database, with the key kept outside it | We store third-party credentials: a copy of the database alone does not reveal them |
+| Files | Server disk, in a Docker volume, behind our own storage interface (put, get, delete) | Like Mailcow does with mail: no extra service, and backup is the volume plus the database dump. If S3 is ever needed, another implementation of the interface is added without touching the rest |
 | Tests | Vitest and Playwright | |
-| Operations | Docker Compose | |
+| Operations | Docker Compose, installed on one's own server | Like Mailcow: one project with every service in containers. No managed third-party storage or services |
 
 ### 3. Isolation between organizations
 
@@ -132,7 +134,7 @@ The same codebase, with two entry points:
 
 ### 5. Still open
 
-- **File storage.** Maat ships as a Docker Compose project installed on one's own server. Managed third-party storage is not used.
+Nothing at this layer. Open product questions are in [vision-and-decisions.md](vision-and-decisions.md).
 
 ### 6. Good practices
 
