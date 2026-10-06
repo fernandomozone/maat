@@ -44,6 +44,10 @@ Exemplos:
 
 **Linguagem do backend: TypeScript (Node.js).** É a única linguagem com bibliotecas completas e atuais para email e calendário (imapflow, nodemailer, tsdav, ical.js) e é também a linguagem do frontend. Ver o [levantamento da stack técnica](tech-stack-research.md).
 
+**Stack técnica (2026-10-06).** PostgreSQL com Row Level Security para isolar organizações; Fastify; esquemas Zod partilhados entre backend e frontend; SQL escrito à mão com `pg`, sem ORM; React com Vite, React Router e TanStack Query; Tailwind com o tema do protótipo; sessão no servidor com cookie `httpOnly` e Argon2; Vitest e Playwright; Docker Compose. Detalhe e razões em [architecture.md](architecture.md).
+
+**Layout.** O desenho da interface é o do protótipo e dos mockups do projeto (barra de módulos no topo, tema escuro e claro).
+
 **Línguas.** Documentação em português e inglês no mesmo ficheiro; código em inglês. As instruções para agentes de IA ficam em `AGENTS.md` (em inglês); o projeto não usa `CLAUDE.md`.
 
 ### Fora da primeira versão
@@ -56,7 +60,7 @@ Exemplos:
 
 - **Modelo de distribuição.** Instalação pelo próprio cliente, alojamento gerido com uma instalação por cliente, ou plataforma multi-empresa. Por decidir depois de a plataforma estar em uso.
 - **Tecnologia do chat interno.** Construído de raiz ou sobre um protocolo existente (por exemplo Matrix, o que facilitaria ligar WhatsApp e Telegram mais tarde).
-- **Resto da stack técnica**: framework do backend, ORM, base de dados, framework do frontend, armazenamento de ficheiros.
+- **Pontos da stack por confirmar**: tarefas em segundo plano (pg-boss), tempo real no browser (WebSocket + `LISTEN/NOTIFY`), cifra das palavras-passe IMAP e armazenamento de ficheiros S3. Ver a secção 5 de [architecture.md](architecture.md).
 - **Ordem exata das fases** de construção.
 - **Língua da interface** e suporte a traduções.
 - **Licença** do projeto.
@@ -103,6 +107,10 @@ Examples:
 
 **Backend language: TypeScript (Node.js).** It is the only language with complete, current libraries for email and calendar (imapflow, nodemailer, tsdav, ical.js), and it is also the frontend's language. See the [tech stack research](tech-stack-research.md).
 
+**Tech stack (2026-10-06).** PostgreSQL with Row Level Security to isolate organizations; Fastify; Zod schemas shared between backend and frontend; hand-written SQL with `pg`, no ORM; React with Vite, React Router and TanStack Query; Tailwind with the prototype's theme; server-side sessions with an `httpOnly` cookie and Argon2; Vitest and Playwright; Docker Compose. Details and reasons in [architecture.md](architecture.md).
+
+**Layout.** The interface design is the one in the project's prototype and mockups (module bar at the top, dark and light themes).
+
 **Languages.** Documentation in Portuguese and English in the same file; code in English. Instructions for AI agents live in `AGENTS.md` (in English); the project does not use `CLAUDE.md`.
 
 ### Out of the first version
@@ -115,7 +123,7 @@ Examples:
 
 - **Distribution model.** Self-installed by the customer, managed hosting with one instance per customer, or a multi-tenant platform. To be decided once the platform is in use.
 - **Internal chat technology.** Built from scratch or on an existing protocol (for example Matrix, which would make connecting WhatsApp and Telegram easier later).
-- **Rest of the tech stack**: backend framework, ORM, database, frontend framework, file storage.
+- **Stack items to confirm**: background jobs (pg-boss), real-time updates in the browser (WebSocket + `LISTEN/NOTIFY`), IMAP password encryption and S3 file storage. See section 5 of [architecture.md](architecture.md).
 - **Exact order of build phases.**
 - **Interface language** and translation support.
 - **Project license.**

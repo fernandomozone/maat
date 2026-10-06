@@ -39,6 +39,7 @@ Em [`prototype/index.html`](prototype/index.html) há um protótipo interativo c
 ### Documentação
 
 - [Visão e decisões](docs/vision-and-decisions.md): âmbito da primeira versão, decisões tomadas e questões em aberto.
+- [Arquitetura](docs/architecture.md): a stack, o isolamento entre organizações e as boas práticas.
 - [Levantamento da stack técnica](docs/tech-stack-research.md): o que existe para reaproveitar, módulo a módulo, em cada linguagem candidata.
 - [AGENTS.md](AGENTS.md): convenções para agentes de IA que trabalhem no projeto (em inglês).
 
@@ -79,5 +80,6 @@ The core concept: everything is an **item** with an origin and links. Converting
 ### Documentation
 
 - [Vision and decisions](docs/vision-and-decisions.md): scope of the first version, decisions made and open questions.
+- [Architecture](docs/architecture.md): the stack, isolation between organizations and good practices.
 - [Tech stack research](docs/tech-stack-research.md): what exists to reuse, module by module, in each candidate language.
 - [AGENTS.md](AGENTS.md): conventions for AI agents working on the project.
