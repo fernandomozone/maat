@@ -6,7 +6,7 @@ Instructions for AI coding agents working on Maat. This is the single source of 
 
 Maat is a self-hosted platform that unifies email, internal chat, projects, tasks, support tickets, calendar and documents under one login and one layout, with every item linked to the items it came from and the items it became. See [README.md](README.md) and [docs/vision-and-decisions.md](docs/vision-and-decisions.md) before making design decisions.
 
-Current stage: design. The only runnable code is the static prototype in `prototype/index.html`. There is no application code, stack or build system yet; do not introduce one without an explicit decision recorded in `docs/vision-and-decisions.md`.
+Current stage: design. The only runnable code is the static prototype in `prototype/index.html`. There is no application code or build system yet. The backend language is TypeScript (Node.js); the rest of the stack (frameworks, ORM, database, storage) is not decided yet. Do not introduce any of it without an explicit decision recorded in `docs/vision-and-decisions.md`.
 
 ## Language rules
 

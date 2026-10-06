@@ -42,6 +42,8 @@ Exemplos:
 
 **Construção por fases.** Todos os módulos estão no plano, mas são construídos por ordem para a plataforma ser usável cedo.
 
+**Linguagem do backend: TypeScript (Node.js).** É a única linguagem com bibliotecas completas e atuais para email e calendário (imapflow, nodemailer, tsdav, ical.js) e é também a linguagem do frontend. Ver o [levantamento da stack técnica](tech-stack-research.md).
+
 **Línguas.** Documentação em português e inglês no mesmo ficheiro; código em inglês. As instruções para agentes de IA ficam em `AGENTS.md` (em inglês); o projeto não usa `CLAUDE.md`.
 
 ### Fora da primeira versão
@@ -54,7 +56,7 @@ Exemplos:
 
 - **Modelo de distribuição.** Instalação pelo próprio cliente, alojamento gerido com uma instalação por cliente, ou plataforma multi-empresa. Por decidir depois de a plataforma estar em uso.
 - **Tecnologia do chat interno.** Construído de raiz ou sobre um protocolo existente (por exemplo Matrix, o que facilitaria ligar WhatsApp e Telegram mais tarde).
-- **Stack técnica** (linguagem, framework, base de dados, armazenamento de ficheiros).
+- **Resto da stack técnica**: framework do backend, ORM, base de dados, framework do frontend, armazenamento de ficheiros.
 - **Ordem exata das fases** de construção.
 - **Língua da interface** e suporte a traduções.
 - **Licença** do projeto.
@@ -99,6 +101,8 @@ Examples:
 
 **Built in phases.** All modules are in the plan, but they are built in order so the platform becomes usable early.
 
+**Backend language: TypeScript (Node.js).** It is the only language with complete, current libraries for email and calendar (imapflow, nodemailer, tsdav, ical.js), and it is also the frontend's language. See the [tech stack research](tech-stack-research.md).
+
 **Languages.** Documentation in Portuguese and English in the same file; code in English. Instructions for AI agents live in `AGENTS.md` (in English); the project does not use `CLAUDE.md`.
 
 ### Out of the first version
@@ -111,7 +115,7 @@ Examples:
 
 - **Distribution model.** Self-installed by the customer, managed hosting with one instance per customer, or a multi-tenant platform. To be decided once the platform is in use.
 - **Internal chat technology.** Built from scratch or on an existing protocol (for example Matrix, which would make connecting WhatsApp and Telegram easier later).
-- **Tech stack** (language, framework, database, file storage).
+- **Rest of the tech stack**: backend framework, ORM, database, frontend framework, file storage.
 - **Exact order of build phases.**
 - **Interface language** and translation support.
 - **Project license.**
