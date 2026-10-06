@@ -40,7 +40,7 @@ Exemplos:
 
 **Self-hosted, empacotado em Docker Compose.**
 
-**Construção por fases.** Todos os módulos estão no plano, mas são construídos por ordem para a plataforma ser usável cedo.
+**Construção por fases (2026-10-06).** Fundação, Email, Calendário, Tarefas e Projetos, Tickets, Documentos, Chat. Uma fase só está feita quando é usada no trabalho real do dia a dia. Detalhe em [roadmap.md](roadmap.md).
 
 **Linguagem do backend: TypeScript (Node.js).** É a única linguagem com bibliotecas completas e atuais para email e calendário (imapflow, nodemailer, tsdav, ical.js) e é também a linguagem do frontend. Ver o [levantamento da stack técnica](tech-stack-research.md).
 
@@ -60,7 +60,6 @@ Exemplos:
 
 - **Modelo de distribuição.** Instalação pelo próprio cliente, alojamento gerido com uma instalação por cliente, ou plataforma multi-empresa. Por decidir depois de a plataforma estar em uso.
 - **Tecnologia do chat interno.** Construído de raiz ou sobre um protocolo existente (por exemplo Matrix, o que facilitaria ligar WhatsApp e Telegram mais tarde).
-- **Ordem exata das fases** de construção.
 - **Língua da interface** e suporte a traduções.
 - **Licença** do projeto.
 
@@ -102,7 +101,7 @@ Examples:
 
 **Self-hosted, packaged with Docker Compose.**
 
-**Built in phases.** All modules are in the plan, but they are built in order so the platform becomes usable early.
+**Built in phases (2026-10-06).** Foundation, Email, Calendar, Tasks and Projects, Tickets, Documents, Chat. A phase is only done when it is used in real day-to-day work. Details in [roadmap.md](roadmap.md).
 
 **Backend language: TypeScript (Node.js).** It is the only language with complete, current libraries for email and calendar (imapflow, nodemailer, tsdav, ical.js), and it is also the frontend's language. See the [tech stack research](tech-stack-research.md).
 
@@ -122,6 +121,5 @@ Examples:
 
 - **Distribution model.** Self-installed by the customer, managed hosting with one instance per customer, or a multi-tenant platform. To be decided once the platform is in use.
 - **Internal chat technology.** Built from scratch or on an existing protocol (for example Matrix, which would make connecting WhatsApp and Telegram easier later).
-- **Exact order of build phases.**
 - **Interface language** and translation support.
 - **Project license.**

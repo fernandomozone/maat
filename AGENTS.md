@@ -8,6 +8,8 @@ Maat is a self-hosted platform that unifies email, internal chat, projects, task
 
 Current stage: design. The only runnable code is the static prototype in `prototype/index.html`. There is no application code or build system yet. The stack is decided and described in [docs/architecture.md](docs/architecture.md); items listed there as "still open" are not decided. Do not introduce any dependency, service or tool outside that document without an explicit decision recorded in it.
 
+Build order: follow the phases in [docs/roadmap.md](docs/roadmap.md), one at a time. Do not start work belonging to a later phase.
+
 ## Language rules
 
 - **Code is in English**: identifiers, file and folder names, comments, log messages, configuration keys, test names and commit messages.
