@@ -1,0 +1,1026 @@
+<!doctype html>
+<html lang="pt">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Maat — protótipo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<style>
+:root{
+  --bg:#eef1f3; --surface:#ffffff; --surface-2:#f6f8f9; --raised:#f1f4f6; --sel:#e3eff0;
+  --line:#dbe1e5; --line-soft:#e8ecef; --text:#1b2126; --text-2:#3d4750; --muted:#5b6670;
+  --accent:#1f7373; --accent-ink:#ffffff; --accent-text:#1a6868; --accent-soft:#e1f1f1; --accent-line:#9fcfcf;
+  --warn:#a4501f; --late:#b3401f;
+  --c-email-bg:#e3edf7; --c-email:#24527a;
+  --c-chat-bg:#efe6f6; --c-chat:#5b3a78;
+  --c-ticket-bg:#dcf0f0; --c-ticket:#1d5f5f;
+  --c-task-bg:#e8eef4; --c-task:#34506a;
+  --c-manual-bg:#eceff1; --c-manual:#46515a;
+  --c-event-bg:#f5efd6; --c-event:#6b5a14;
+  --c-doc-bg:#f7e8dc; --c-doc:#7c4219;
+  --c-project-bg:#e4f0e1; --c-project:#35592d;
+  --cal-team:#cfe7e7; --cal-support:#d6e4f2; --cal-personal:#f1e7c4; --cal-ink:#1b2126;
+  --shadow:0 8px 30px rgba(20,30,40,.18);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#15181b; --surface:#1b1f23; --surface-2:#181c20; --raised:#20252a; --sel:#212a30;
+    --line:#2a2f35; --line-soft:#23282d; --text:#e4e7ea; --text-2:#c9cfd4; --muted:#9aa3ab;
+    --accent:#1f7373; --accent-ink:#ffffff; --accent-text:#6cc9c9; --accent-soft:#15272a; --accent-line:#1f5a5a;
+    --warn:#f0bf8a; --late:#f0a08a;
+    --c-email-bg:#23303a; --c-email:#a9c8e6;
+    --c-chat-bg:#2e2536; --c-chat:#cdb0e6;
+    --c-ticket-bg:#1f3434; --c-ticket:#8fd6d6;
+    --c-task-bg:#243039; --c-task:#b3c8dc;
+    --c-manual-bg:#2a2f35; --c-manual:#c9cfd4;
+    --c-event-bg:#33301c; --c-event:#e6d58a;
+    --c-doc-bg:#3a2a1c; --c-doc:#f0bf8a;
+    --c-project-bg:#22301f; --c-project:#a8d49a;
+    --cal-team:#1f4a4a; --cal-support:#23384a; --cal-personal:#3a3420; --cal-ink:#eef3f5;
+    --shadow:0 10px 40px rgba(0,0,0,.5);
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#15181b; --surface:#1b1f23; --surface-2:#181c20; --raised:#20252a; --sel:#212a30;
+  --line:#2a2f35; --line-soft:#23282d; --text:#e4e7ea; --text-2:#c9cfd4; --muted:#9aa3ab;
+  --accent:#1f7373; --accent-ink:#ffffff; --accent-text:#6cc9c9; --accent-soft:#15272a; --accent-line:#1f5a5a;
+  --warn:#f0bf8a; --late:#f0a08a;
+  --c-email-bg:#23303a; --c-email:#a9c8e6;
+  --c-chat-bg:#2e2536; --c-chat:#cdb0e6;
+  --c-ticket-bg:#1f3434; --c-ticket:#8fd6d6;
+  --c-task-bg:#243039; --c-task:#b3c8dc;
+  --c-manual-bg:#2a2f35; --c-manual:#c9cfd4;
+  --c-event-bg:#33301c; --c-event:#e6d58a;
+  --c-doc-bg:#3a2a1c; --c-doc:#f0bf8a;
+  --c-project-bg:#22301f; --c-project:#a8d49a;
+  --cal-team:#1f4a4a; --cal-support:#23384a; --cal-personal:#3a3420; --cal-ink:#eef3f5;
+  --shadow:0 10px 40px rgba(0,0,0,.5);
+}
+:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+html{scroll-padding-top:env(safe-area-inset-top,0px);height:100%}
+*,*::before,*::after{box-sizing:border-box}
+body{margin:0;height:100%;background:var(--bg);color:var(--text);font-family:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;font-size:14px;line-height:1.45}
+button,input,select,textarea{font:inherit;color:inherit}
+button{cursor:pointer}
+a{color:var(--accent-text)}
+:focus-visible{outline:2px solid var(--accent-text);outline-offset:2px}
+.mono{font-family:"IBM Plex Mono",ui-monospace,Menlo,monospace}
+.muted{color:var(--muted)}
+.app{height:100%;display:flex;flex-direction:column;min-height:0}
+
+/* header */
+.top{flex-shrink:0;display:flex;align-items:center;gap:22px;height:58px;padding:0 20px;background:var(--surface);border-bottom:1px solid var(--line)}
+.brand{display:flex;align-items:center;gap:9px;font-size:19px;font-weight:600;white-space:nowrap}
+.nav{display:flex;gap:2px;overflow-x:auto;scrollbar-width:none;min-width:0}
+.nav::-webkit-scrollbar{display:none}
+.nav button{display:flex;align-items:center;gap:6px;height:36px;padding:0 12px;border:0;border-radius:6px;background:transparent;color:var(--text-2);font-size:15px;white-space:nowrap}
+.nav button:hover{background:var(--raised)}
+.nav button[aria-current="page"]{background:var(--sel);color:var(--text);font-weight:500}
+.badge{min-width:20px;padding:1px 7px;border-radius:10px;background:var(--accent);color:var(--accent-ink);font-size:12px;text-align:center}
+.spacer{flex:1}
+.search{position:relative;width:300px}
+.search input{width:100%;height:36px;padding:0 64px 0 12px;background:var(--bg);border:1px solid var(--line);border-radius:6px;font-size:14px}
+.search kbd{position:absolute;right:10px;top:9px;font-family:"IBM Plex Mono",monospace;font-size:12px;color:var(--muted)}
+.results{position:absolute;top:42px;left:0;right:0;z-index:30;background:var(--surface);border:1px solid var(--line);border-radius:8px;box-shadow:var(--shadow);overflow:hidden}
+.results button{display:flex;align-items:center;gap:10px;width:100%;min-height:44px;padding:8px 12px;border:0;background:transparent;text-align:left}
+.results button:hover,.results button.hl{background:var(--sel)}
+.userbox{display:flex;align-items:center;gap:10px;white-space:nowrap}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;height:36px;padding:0 14px;border:1px solid var(--line);border-radius:6px;background:transparent;font-size:14px;white-space:nowrap}
+.btn:hover{background:var(--raised)}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:var(--accent-ink);font-weight:500}
+.btn.primary:hover{filter:brightness(1.1)}
+.btn.sm{height:32px;padding:0 10px;font-size:13px}
+.btn.icon{width:36px;padding:0}
+.pill{height:32px;padding:0 12px;border-radius:16px;border:1px solid var(--line);background:transparent;font-size:13px;color:var(--text-2)}
+.pill[aria-pressed="true"]{background:var(--sel);border-color:var(--sel);color:var(--text)}
+.seg{display:inline-flex;gap:3px;padding:3px;background:var(--surface-2);border:1px solid var(--line);border-radius:8px}
+.seg button{height:30px;padding:0 12px;border:0;border-radius:6px;background:transparent;color:var(--text-2);font-size:13px}
+.seg button[aria-pressed="true"]{background:var(--sel);color:var(--text)}
+
+/* layout */
+.main{flex:1;min-height:0;display:flex;gap:16px;padding:16px 20px}
+.side{width:230px;flex-shrink:0;display:flex;flex-direction:column;gap:16px;overflow:auto}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:8px;display:flex;flex-direction:column;min-height:0;overflow:hidden}
+.panel.grow{flex:1;min-width:0}
+.panel-head{display:flex;align-items:center;gap:8px;padding:12px 16px;border-bottom:1px solid var(--line);flex-wrap:wrap}
+.panel-head h1,.panel-head h2{margin:0;font-size:17px;font-weight:600}
+.scroll{overflow:auto;min-height:0;flex:1}
+.aside{width:310px;flex-shrink:0;display:flex;flex-direction:column;gap:16px;overflow:auto}
+.aside.wide{width:420px}
+.sec-title{margin:0;padding:12px 16px 8px;font-size:13px;font-weight:600;color:var(--muted)}
+.group-title{padding:0 10px 6px;font-size:13px;font-weight:600;color:var(--muted)}
+.navlist{display:flex;flex-direction:column;gap:2px}
+.navlist button{display:flex;align-items:center;gap:8px;width:100%;min-height:36px;padding:0 10px;border:0;border-radius:6px;background:transparent;color:var(--text-2);font-size:14px;text-align:left}
+.navlist button:hover{background:var(--raised)}
+.navlist button[aria-current="true"]{background:var(--sel);color:var(--text)}
+.navlist .count{margin-left:auto;font-size:12px;color:var(--muted)}
+.row{display:flex;flex-direction:column;gap:3px;width:100%;padding:11px 16px;border:0;border-bottom:1px solid var(--line-soft);background:transparent;text-align:left}
+.row:hover{background:var(--raised)}
+.row[aria-current="true"]{background:var(--sel);box-shadow:inset 3px 0 0 var(--accent-text)}
+.row .line1{display:flex;align-items:center;gap:8px}
+.row .who{font-weight:600;flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.row .txt{color:var(--text-2);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.row .lnk{font-size:12px;color:var(--accent-text)}
+.dot{width:8px;height:8px;border-radius:4px;background:var(--accent-text);flex-shrink:0}
+.chip{display:inline-flex;align-items:center;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:500;white-space:nowrap}
+.k-email{background:var(--c-email-bg);color:var(--c-email)}
+.k-message,.k-chat{background:var(--c-chat-bg);color:var(--c-chat)}
+.k-ticket{background:var(--c-ticket-bg);color:var(--c-ticket)}
+.k-task{background:var(--c-task-bg);color:var(--c-task)}
+.k-manual{background:var(--c-manual-bg);color:var(--c-manual)}
+.k-event{background:var(--c-event-bg);color:var(--c-event)}
+.k-doc{background:var(--c-doc-bg);color:var(--c-doc)}
+.k-project{background:var(--c-project-bg);color:var(--c-project)}
+.empty{padding:28px 20px;color:var(--muted);text-align:center}
+
+/* links */
+.links button{display:flex;flex-direction:column;gap:3px;width:100%;padding:10px 16px;border:0;border-top:1px solid var(--line-soft);background:transparent;text-align:left}
+.links button:hover{background:var(--raised)}
+.links .t{font-weight:500}
+.links .m{font-size:12px;color:var(--muted)}
+.banner{display:flex;align-items:flex-start;gap:10px;padding:12px 14px;background:var(--accent-soft);border:1px solid var(--accent-line);border-radius:8px}
+.linkbtn{border:0;background:none;padding:0;color:var(--accent-text);text-decoration:underline;text-underline-offset:2px;font-size:inherit}
+
+/* email reading */
+.read-head{padding:18px 24px;border-bottom:1px solid var(--line);display:flex;flex-direction:column;gap:6px}
+.read-head h2{margin:0;font-size:21px;font-weight:600;line-height:1.3}
+.actions{display:flex;align-items:center;gap:8px;padding:10px 24px;border-bottom:1px solid var(--line);background:var(--surface-2);flex-wrap:wrap}
+.body{padding:22px 24px;display:flex;flex-direction:column;gap:14px;font-size:15px;line-height:1.6;color:var(--text-2);max-width:760px}
+.body p{margin:0;white-space:pre-line}
+.attach{display:flex;align-items:center;gap:12px;padding:12px 14px;background:var(--raised);border:1px solid var(--line);border-radius:8px}
+textarea,.field input,.field select{width:100%;padding:9px 10px;background:var(--bg);border:1px solid var(--line);border-radius:6px;font-size:14px}
+textarea{resize:vertical;min-height:80px}
+
+/* chat */
+.msgs{flex:1;overflow:auto;padding:14px 16px;display:flex;flex-direction:column;gap:2px}
+.msg{position:relative;display:flex;gap:12px;padding:9px 10px;border-radius:8px}
+.msg:hover,.msg:focus-within{background:var(--raised)}
+.msg.flash{background:var(--accent-soft)}
+.avatar{width:36px;height:36px;flex-shrink:0;border-radius:18px;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:600;color:#fff}
+.msg .tools{position:absolute;right:10px;top:8px;display:flex;gap:6px;opacity:0}
+.msg:hover .tools,.msg:focus-within .tools{opacity:1}
+.composer{display:flex;gap:8px;padding:12px 16px;border-top:1px solid var(--line)}
+.composer input{flex:1;height:44px;padding:0 14px;background:var(--bg);border:1px solid var(--line);border-radius:8px;font-size:14px}
+.card-ref{display:flex;flex-direction:column;gap:2px;max-width:420px;margin-top:4px;padding:9px 12px;background:var(--surface-2);border:1px solid var(--line);border-radius:6px;text-align:left}
+
+/* kanban */
+.board{flex:1;min-height:0;display:grid;grid-template-columns:repeat(4,minmax(220px,1fr));gap:14px;overflow-x:auto}
+.col{display:flex;flex-direction:column;gap:10px;padding:12px;background:var(--surface);border:1px solid var(--line);border-radius:8px;min-height:0;overflow:auto;transition:background .12s,border-color .12s}
+.col.over{background:var(--accent-soft);border-color:var(--accent-line)}
+.col h2{margin:0;display:flex;gap:8px;align-items:center;font-size:14px;font-weight:600;color:var(--text-2);padding:2px 4px 4px}
+.kcard{display:flex;flex-direction:column;gap:8px;padding:12px;background:var(--raised);border:1px solid var(--line);border-radius:6px;cursor:grab;text-align:left;width:100%}
+.kcard:active{cursor:grabbing}
+.kcard.dragging{opacity:.45}
+.kcard .ttl{font-weight:500;line-height:1.35}
+.kcard.done .ttl{text-decoration:line-through;color:var(--muted)}
+.mini-av{width:24px;height:24px;border-radius:12px;display:inline-flex;align-items:center;justify-content:center;font-size:10px;font-weight:600;color:#fff}
+
+/* tables */
+.thead,.trow{display:grid;gap:12px;align-items:center;padding:0 16px}
+.thead{padding-top:8px;padding-bottom:8px;font-size:12px;color:var(--muted);border-bottom:1px solid var(--line)}
+.trow{min-height:48px;border:0;border-bottom:1px solid var(--line-soft);background:transparent;width:100%;text-align:left}
+.trow:hover{background:var(--raised)}
+.trow[aria-current="true"]{background:var(--sel);box-shadow:inset 3px 0 0 var(--accent-text)}
+.ell{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0}
+.g-tasks{grid-template-columns:28px minmax(0,1fr) 170px 100px 80px 44px}
+.g-tickets{grid-template-columns:62px minmax(0,1fr) 120px 96px 76px 44px}
+.g-docs{grid-template-columns:minmax(0,1fr) 110px 200px}
+.chk{width:18px;height:18px;accent-color:var(--accent)}
+.detail-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px 16px;font-size:13px}
+.detail-grid>div{display:flex;flex-direction:column;gap:3px}
+.detail-grid select{padding:6px 8px;background:var(--bg);border:1px solid var(--line);border-radius:6px}
+.pad{padding:16px 18px;display:flex;flex-direction:column;gap:16px}
+.timeline{display:flex;flex-direction:column}
+.tl{display:flex;gap:12px}
+.tl .rail{display:flex;flex-direction:column;align-items:center;width:12px}
+.tl .pt{width:10px;height:10px;border-radius:5px;margin-top:5px;flex-shrink:0}
+.tl .ln{flex:1;width:1px;background:var(--line)}
+.tl .c{padding-bottom:14px;display:flex;flex-direction:column;gap:2px}
+
+/* calendar */
+.cal{flex:1;min-height:0;display:flex;flex-direction:column}
+.cal-head{display:flex;padding-left:56px;border-bottom:1px solid var(--line)}
+.cal-head div{flex:1;display:flex;flex-direction:column;align-items:center;padding:8px 0}
+.cal-head .today{color:var(--accent-text)}
+.cal-body{flex:1;overflow:auto;display:flex}
+.hours{width:56px;flex-shrink:0}
+.hours div{height:60px;padding:0 8px;text-align:right;font-size:11px;color:var(--muted)}
+.day{flex:1;position:relative;border-left:1px solid var(--line-soft);min-width:110px}
+.day.today{background:var(--surface-2)}
+.day .slot{height:60px;border-top:1px solid var(--line-soft)}
+.ev{position:absolute;left:4px;right:4px;padding:5px 8px;border-radius:6px;border:0;display:flex;flex-direction:column;gap:1px;overflow:hidden;text-align:left;color:var(--cal-ink);font-size:13px}
+.ev[aria-current="true"]{outline:2px solid var(--accent-text);outline-offset:1px}
+.ev.team{background:var(--cal-team)} .ev.support{background:var(--cal-support)} .ev.personal{background:var(--cal-personal)}
+.ev.task{background:transparent;border:2px dashed var(--c-chat);color:var(--text)}
+.now{position:absolute;left:0;right:0;height:2px;background:var(--late)}
+.sw{width:12px;height:12px;border-radius:3px;flex-shrink:0}
+
+/* docs */
+.preview{display:flex;justify-content:center;padding:16px;background:var(--surface-2);border-bottom:1px solid var(--line)}
+.page{width:170px;height:220px;background:#eceff1;border-radius:4px;padding:16px;display:flex;flex-direction:column;gap:8px}
+.page i{display:block;height:6px;background:#cfd4d8;border-radius:2px}
+.dropzone{margin:16px;padding:22px;border:1px dashed var(--line);border-radius:8px;text-align:center;color:var(--muted)}
+.dropzone.over{border-color:var(--accent-text);background:var(--accent-soft)}
+
+/* modal & toast */
+.backdrop{position:fixed;inset:0;z-index:50;background:rgba(10,14,18,.55);display:flex;align-items:center;justify-content:center;padding:20px}
+.modal{width:min(480px,100%);max-height:calc(100% - 40px);overflow:auto;background:var(--surface);border:1px solid var(--line);border-radius:10px;box-shadow:var(--shadow)}
+.modal h2{margin:0;padding:18px 20px 4px;font-size:18px}
+.modal form{padding:12px 20px 20px;display:flex;flex-direction:column;gap:14px}
+.field{display:flex;flex-direction:column;gap:6px;font-size:13px;color:var(--muted)}
+.field-row{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.modal .foot{display:flex;justify-content:flex-end;gap:8px;padding-top:4px}
+.toasts{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(20px + env(safe-area-inset-bottom,0px));z-index:60;display:flex;flex-direction:column;gap:8px;align-items:center}
+.toast{display:flex;align-items:center;gap:14px;padding:10px 14px;background:var(--text);color:var(--bg);border-radius:8px;box-shadow:var(--shadow);font-size:14px;animation:tin .18s ease-out}
+.toast button{border:0;background:none;color:inherit;text-decoration:underline;font-weight:600;padding:4px}
+@keyframes tin{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion: reduce){.toast{animation:none}.col{transition:none}}
+
+.demo-note{font-size:12px;color:var(--muted);padding:10px;border-top:1px solid var(--line)}
+
+@media (max-width:1180px){
+  .search{width:200px}
+  .aside{width:270px}
+  .aside.wide{width:340px}
+  .side{width:200px}
+}
+@media (max-width:960px){
+  .app{height:auto;min-height:100%}
+  .top{flex-wrap:wrap;height:auto;padding:10px 14px;gap:10px}
+  .nav{order:3;width:100%}
+  .search{flex:1;width:auto}
+  .userbox .who-name{display:none}
+  .main{flex-direction:column;padding:12px}
+  .side,.aside,.aside.wide{width:100%;overflow:visible}
+  .panel{min-height:auto}
+  .scroll{max-height:60vh}
+  .board{grid-template-columns:repeat(4,minmax(240px,1fr))}
+  .cal-body{max-height:70vh}
+  .g-tasks{grid-template-columns:28px minmax(0,1fr) 80px}
+  .g-tasks .hide-sm,.g-tickets .hide-sm{display:none}
+  .g-tickets{grid-template-columns:56px minmax(0,1fr) 90px}
+  .g-docs{grid-template-columns:minmax(0,1fr) 90px}
+  .g-docs .hide-sm{display:none}
+}
+</style>
+</head>
+<body>
+<div class="app" id="app"></div>
+<div class="toasts" id="toasts" aria-live="polite"></div>
+<input type="file" id="fileInput" multiple hidden>
+
+<script>
+(function(){
+'use strict';
+const STORE_KEY = 'maat-prototype-v1';
+const THEME_KEY = 'maat-prototype-theme';
+const DAYS = [{dow:'seg',num:21},{dow:'ter',num:22},{dow:'qua',num:23},{dow:'qui',num:24},{dow:'sex',num:25}];
+const TODAY = 4;
+const KIND = {email:'Email', message:'Mensagem', task:'Tarefa', ticket:'Ticket', project:'Projeto', event:'Evento', doc:'Documento'};
+const STATUS = {todo:'A fazer', doing:'Em curso', review:'Em revisão', done:'Feito'};
+const PEOPLE = {MZ:{name:'Mozone',color:'#2f6f8a'}, C1:{name:'[Colega 1]',color:'#6a4f8a'}, C2:{name:'[Colega 2]',color:'#3f7a4a'}, C3:{name:'[Colega 3]',color:'#8a6a2f'}};
+
+function seed(){
+  return {
+    seq: 100,
+    ticketSeq: 143,
+    view: 'email',
+    sel: {account:'support', folder:'Entrada', email:'e1', channel:'support', project:'p1', task:'k1', ticket:'t142', event:null, docFolder:'Clientes/[Cliente A]', doc:'d1', ticketTab:'open', taskFilter:'mine', emailFilter:'all'},
+    accounts: [{id:'support', addr:'suporte@[domínio]'},{id:'general', addr:'geral@[domínio]'}],
+    emails: [
+      {id:'e1', acc:'support', folder:'Entrada', fromName:'[Cliente A]', from:'cliente@exemplo.pt', subj:'Emails para Gmail estão a voltar para trás', when:'hoje, 09:12', unread:false, body:'Bom dia,\n\nDesde ontem, os emails que enviamos para endereços Gmail estão a ser devolvidos. Para outros domínios parece funcionar. Envio em anexo a mensagem de erro que recebemos.\n\nConsegue verificar?\nObrigado.', attach:[{name:'erro-envio.pdf', type:'PDF'}]},
+      {id:'e2', acc:'support', folder:'Entrada', fromName:'[Contacto B]', from:'contacto@exemplo.pt', subj:'Orçamento revisto em anexo', when:'hoje, 08:30', unread:true, body:'Olá,\n\nSegue o orçamento revisto, com as alterações que falámos.\n\nCumprimentos.', attach:[{name:'orcamento-revisto.pdf', type:'PDF'}]},
+      {id:'e3', acc:'support', folder:'Entrada', fromName:'[Fornecedor C]', from:'faturacao@fornecedor.pt', subj:'Fatura de setembro', when:'ontem', unread:true, body:'Junto enviamos a fatura referente a setembro.', attach:[{name:'fatura-setembro.pdf', type:'PDF'}]},
+      {id:'e4', acc:'support', folder:'Entrada', fromName:'[Cliente D]', from:'geral@cliente-d.pt', subj:'Novo site: podemos avançar?', when:'ontem', unread:false, body:'Boa tarde,\n\nGostámos da proposta. Podemos avançar com o novo site? Quando podemos reunir?', attach:[]},
+      {id:'e5', acc:'support', folder:'Entrada', fromName:'[Cliente F]', from:'info@cliente-f.pt', subj:'Impressora do 1.º piso sem rede', when:'seg', unread:false, body:'A impressora do primeiro piso deixou de aparecer na rede desde esta manhã.', attach:[]},
+      {id:'e6', acc:'support', folder:'Entrada', fromName:'[Cliente G]', from:'ti@cliente-g.pt', subj:'Pedido de acesso ao servidor', when:'dom', unread:true, body:'Precisamos de acesso ao servidor de ficheiros para um novo colaborador.', attach:[]},
+      {id:'e7', acc:'general', folder:'Entrada', fromName:'[Fornecedor H]', from:'dominios@fornecedor-h.pt', subj:'Renovação de domínios', when:'sex', unread:true, body:'Os seguintes domínios expiram nos próximos 30 dias.', attach:[]},
+      {id:'e8', acc:'support', folder:'Enviados', fromName:'Para: [Cliente A]', from:'suporte@[domínio]', subj:'Re: Emails para Gmail estão a voltar para trás', when:'hoje, 09:50', unread:false, body:'Olá,\n\nConfirmamos a receção e estamos a verificar.\n\nCumprimentos.', attach:[]}
+    ],
+    channels: [
+      {id:'general', name:'# geral', kind:'canal', unread:0},
+      {id:'support', name:'# suporte', kind:'canal', unread:0},
+      {id:'site', name:'# site-cliente-d', kind:'canal', unread:2},
+      {id:'infra', name:'# infra', kind:'canal', unread:0},
+      {id:'dm-c1', name:'[Colega 1]', kind:'dm', unread:1},
+      {id:'dm-c2', name:'[Colega 2]', kind:'dm', unread:0}
+    ],
+    messages: [
+      {id:'m1', ch:'support', who:'C1', when:'09:40', text:'Chegou um email do [Cliente A]: emails para Gmail estão a ser devolvidos. Já criei ticket.', ref:'ticket:t142'},
+      {id:'m2', ch:'support', who:'MZ', when:'09:44', text:'Deve ser o SPF ou o DKIM depois da migração. Alguém confirma os registos DNS hoje?'},
+      {id:'m3', ch:'support', who:'C2', when:'09:46', text:'Eu vejo isso à tarde.'},
+      {id:'m4', ch:'support', who:'C1', when:'10:15', text:'O backup de ontem terminou com avisos, fica para rever.'},
+      {id:'m5', ch:'support', who:'C3', when:'11:02', text:'A impressora do [Cliente F] já está de volta à rede.'},
+      {id:'m6', ch:'site', who:'C1', when:'ontem', text:'Já tenho uma primeira maquete da página inicial.'},
+      {id:'m7', ch:'site', who:'MZ', when:'ontem', text:'Ótimo, mostramos na chamada com o cliente.'},
+      {id:'m8', ch:'general', who:'C3', when:'seg', text:'Na sexta saio mais cedo.'},
+      {id:'m9', ch:'infra', who:'C2', when:'sex', text:'Servidor de email atualizado, sem problemas.'},
+      {id:'m10', ch:'dm-c1', who:'C1', when:'10:30', text:'Consegues rever a proposta antes de enviarmos?'}
+    ],
+    projects: [
+      {id:'p1', name:'Infra clientes'},
+      {id:'p2', name:'Site [Cliente D]'},
+      {id:'p3', name:'Migração [Cliente G]'},
+      {id:'p4', name:'Interno: esta plataforma'}
+    ],
+    tasks: [
+      {id:'k1', title:'Verificar SPF/DKIM', project:'p1', status:'doing', due:4, who:'C2', checklist:[{t:'Confirmar IP de saída do servidor',d:true},{t:'Atualizar registo SPF',d:false},{t:'Testar envio para Gmail',d:false}], comments:[{who:'C2', when:'13:20', text:'O registo SPF não inclui o novo IP do servidor.'}]},
+      {id:'k2', title:'Rever backups', project:'p1', status:'todo', due:4, who:'C1', checklist:[], comments:[]},
+      {id:'k3', title:'Impressora do 1.º piso sem rede', project:'p1', status:'done', due:3, who:'C3', checklist:[], comments:[]},
+      {id:'k4', title:'Migrar DNS do [Cliente F]', project:'p1', status:'todo', due:null, who:'MZ', checklist:[], comments:[]},
+      {id:'k5', title:'Documentar configuração de rede', project:'p1', status:'doing', due:null, who:'MZ', checklist:[], comments:[]},
+      {id:'k6', title:'Política de palavras-passe', project:'p1', status:'review', due:null, who:'C1', checklist:[], comments:[]},
+      {id:'k7', title:'Enviar proposta ao [Contacto B]', project:'p2', status:'todo', due:1, who:'MZ', checklist:[], comments:[]},
+      {id:'k8', title:'Maquete da página inicial', project:'p2', status:'review', due:4, who:'C1', checklist:[], comments:[]},
+      {id:'k9', title:'Criar acesso para novo colaborador', project:'p3', status:'todo', due:4, who:'MZ', checklist:[], comments:[]}
+    ],
+    tickets: [
+      {id:'t142', num:142, title:'Emails devolvidos para Gmail', client:'[Cliente A]', state:'open', prio:'Alta', who:'C2', last:'13:20', timeline:[
+        {when:'09:12', kind:'Email recebido', text:'[Cliente A]: emails para Gmail estão a voltar para trás', c:'email'},
+        {when:'09:40', kind:'Ticket criado', text:'[Colega 1] converteu o email em ticket', c:'ticket'},
+        {when:'09:46', kind:'Tarefa ligada', text:'Verificar SPF/DKIM, atribuída a [Colega 2]', c:'task'},
+        {when:'09:50', kind:'Resposta enviada', text:'Confirmamos a receção e estamos a verificar.', c:'email'},
+        {when:'13:20', kind:'Nota interna', text:'O registo SPF não inclui o novo IP do servidor.', c:'event'}]},
+      {id:'t139', num:139, title:'Impressora do 1.º piso sem rede', client:'[Cliente F]', state:'resolved', prio:'Normal', who:'C3', last:'11:02', timeline:[
+        {when:'seg', kind:'Email recebido', text:'[Cliente F]: impressora sem rede', c:'email'},
+        {when:'11:02', kind:'Resolvido', text:'Impressora de volta à rede', c:'ticket'}]},
+      {id:'t138', num:138, title:'Licença de antivírus a expirar', client:'[Cliente A]', state:'waiting', prio:'Baixa', who:'C1', last:'seg', timeline:[{when:'seg', kind:'Ticket criado', text:'Criado manualmente', c:'ticket'}]},
+      {id:'t136', num:136, title:'Portátil lento após atualização', client:'[Cliente D]', state:'resolved', prio:'Normal', who:'C1', last:'sex', timeline:[{when:'sex', kind:'Resolvido', text:'Atualização de controladores', c:'ticket'}]}
+    ],
+    events: [
+      {id:'v1', day:0, start:10, end:11, title:'Reunião de equipa', cal:'team'},
+      {id:'v2', day:1, start:14, end:15.5, title:'Visita [Cliente F]', cal:'support'},
+      {id:'v3', day:2, start:16, end:17, title:'Dentista', cal:'personal'},
+      {id:'v4', day:3, start:10, end:11, title:'Chamada com [Cliente D]', cal:'support'},
+      {id:'v5', day:4, start:11, end:12, title:'Entrega da maquete', cal:'team'},
+      {id:'v6', day:4, start:14.5, end:15.5, title:'Rever backups', cal:'task'},
+      {id:'v7', day:4, start:17, end:17.5, title:'Fecho de faturação', cal:'team'}
+    ],
+    cals: {team:true, support:true, personal:true, task:true},
+    docFolders: ['Organização/Geral','Organização/Contratos','Organização/Modelos','Projetos/Infra clientes','Projetos/Site [Cliente D]','Clientes/[Cliente A]','Clientes/[Cliente D]','Clientes/[Cliente F]'],
+    docs: [
+      {id:'d1', name:'erro-envio.pdf', type:'PDF', folder:'Clientes/[Cliente A]', when:'hoje', by:'C1'},
+      {id:'d2', name:'contrato-manutencao-2026.pdf', type:'PDF', folder:'Clientes/[Cliente A]', when:'12/09', by:'MZ'},
+      {id:'d3', name:'proposta-servicos.docx', type:'DOCX', folder:'Clientes/[Cliente A]', when:'15/08', by:'MZ'},
+      {id:'d4', name:'inventario-equipamentos.xlsx', type:'XLSX', folder:'Projetos/Infra clientes', when:'03/09', by:'C2'},
+      {id:'d5', name:'esquema-rede.png', type:'PNG', folder:'Projetos/Infra clientes', when:'28/08', by:'MZ'},
+      {id:'d6', name:'maquete-inicial.png', type:'PNG', folder:'Projetos/Site [Cliente D]', when:'ontem', by:'C1'},
+      {id:'d7', name:'modelo-proposta.docx', type:'DOCX', folder:'Organização/Modelos', when:'02/07', by:'MZ'}
+    ],
+    links: [
+      {a:'email:e1', b:'ticket:t142', origin:true},
+      {a:'email:e1', b:'task:k1', origin:true},
+      {a:'ticket:t142', b:'task:k1'},
+      {a:'message:m2', b:'task:k1'},
+      {a:'email:e1', b:'doc:d1', origin:true},
+      {a:'ticket:t142', b:'doc:d1'},
+      {a:'email:e8', b:'ticket:t142'},
+      {a:'message:m4', b:'task:k2', origin:true},
+      {a:'task:k2', b:'event:v6', origin:true},
+      {a:'email:e5', b:'ticket:t139', origin:true},
+      {a:'ticket:t139', b:'task:k3', origin:true},
+      {a:'email:e4', b:'project:p2', origin:true},
+      {a:'email:e4', b:'event:v4', origin:true},
+      {a:'email:e2', b:'task:k7', origin:true},
+      {a:'email:e6', b:'task:k9', origin:true},
+      {a:'message:m6', b:'task:k8', origin:true},
+      {a:'task:k8', b:'doc:d6'}
+    ]
+  };
+}
+
+let S;
+function load(){
+  try { const raw = localStorage.getItem(STORE_KEY); if (raw) { S = JSON.parse(raw); if (S && S.links) return; } } catch(e){}
+  S = seed();
+}
+function save(){ try { localStorage.setItem(STORE_KEY, JSON.stringify(S)); } catch(e){} }
+load();
+try { const th = localStorage.getItem(THEME_KEY); if (th) document.documentElement.setAttribute('data-theme', th); } catch(e){}
+
+let ui = {search:'', searchOpen:false, hl:0, modal:null, flashMsg:null, replyOpen:false, ticketMode:'reply'};
+
+/* helpers */
+const $ = s => document.querySelector(s);
+function esc(s){ return String(s == null ? '' : s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+function nid(p){ S.seq++; return p + S.seq; }
+function nowHM(){ const d = new Date(); return String(d.getHours()).padStart(2,'0') + ':' + String(d.getMinutes()).padStart(2,'0'); }
+function parse(ref){ const i = ref.indexOf(':'); return {type: ref.slice(0,i), id: ref.slice(i+1)}; }
+function find(ref){
+  const {type, id} = parse(ref);
+  const col = {email:S.emails, message:S.messages, task:S.tasks, ticket:S.tickets, project:S.projects, event:S.events, doc:S.docs}[type];
+  return col ? col.find(x => x.id === id) : null;
+}
+function title(ref){
+  const o = find(ref); if (!o) return '(removido)';
+  const t = parse(ref).type;
+  if (t === 'email') return o.subj;
+  if (t === 'message') return o.text.length > 60 ? o.text.slice(0,58) + '…' : o.text;
+  if (t === 'ticket') return '#' + String(o.num).padStart(4,'0') + ' ' + o.title;
+  if (t === 'project') return o.name;
+  if (t === 'doc') return o.name;
+  return o.title;
+}
+function dueLabel(d){ if (d == null) return 'sem prazo'; if (d === TODAY) return 'hoje'; if (d < TODAY) return DAYS[d].dow + ' (atrasada)'; return DAYS[d].dow; }
+function hourLabel(h){ const hh = Math.floor(h), mm = Math.round((h - hh) * 60); return String(hh).padStart(2,'0') + ':' + String(mm).padStart(2,'0'); }
+function meta(ref){
+  const o = find(ref); if (!o) return '';
+  const t = parse(ref).type;
+  if (t === 'email') return o.fromName + ', ' + o.when;
+  if (t === 'message') { const ch = S.channels.find(c => c.id === o.ch); return (ch ? ch.name : '') + ', ' + PEOPLE[o.who].name + ', ' + o.when; }
+  if (t === 'task') { const p = S.projects.find(p => p.id === o.project); return STATUS[o.status] + (p ? ', ' + p.name : '') + ', ' + dueLabel(o.due); }
+  if (t === 'ticket') return ({open:'Aberto', waiting:'Em espera', resolved:'Resolvido'})[o.state] + ', prioridade ' + o.prio.toLowerCase() + ', ' + o.client;
+  if (t === 'project') return S.tasks.filter(k => k.project === o.id).length + ' tarefas';
+  if (t === 'event') return DAYS[o.day].dow + ' ' + DAYS[o.day].num + ', ' + hourLabel(o.start);
+  if (t === 'doc') return o.folder;
+  return '';
+}
+function linksOf(ref){
+  const out = [];
+  S.links.forEach(l => { if (l.a === ref && find(l.b)) out.push(l.b); else if (l.b === ref && find(l.a)) out.push(l.a); });
+  return [...new Set(out)];
+}
+function origin(ref){ const l = S.links.find(l => l.b === ref && l.origin && find(l.a)); return l ? l.a : null; }
+function addLink(a, b, isOrigin){ if (!S.links.some(l => (l.a===a&&l.b===b)||(l.a===b&&l.b===a))) S.links.push({a, b, origin: !!isOrigin}); }
+function originChip(ref){
+  const o = origin(ref);
+  if (!o) return '<span class="chip k-manual">Manual</span>';
+  const t = parse(o).type;
+  const label = t === 'message' ? 'Chat' : KIND[t];
+  return '<span class="chip k-' + t + '">de: ' + esc(label) + '</span>';
+}
+function av(who, cls){ const p = PEOPLE[who] || {name:who,color:'#555'}; return '<span class="' + (cls||'mini-av') + '" style="background:' + p.color + '" title="' + esc(p.name) + '">' + esc(who) + '</span>'; }
+function linksPanel(ref, heading){
+  const ls = linksOf(ref);
+  let h = '<div class="panel"><h2 class="sec-title">' + esc(heading || 'Ligações') + '</h2><div class="links">';
+  if (!ls.length) h += '<div class="empty" style="padding:14px 16px;text-align:left">Ainda sem ligações. Use "Converter em" para criar uma.</div>';
+  ls.forEach(r => { const t = parse(r).type; h += '<button type="button" data-open="' + esc(r) + '"><span><span class="chip k-' + t + '">' + KIND[t] + '</span></span><span class="t">' + esc(title(r)) + '</span><span class="m">' + esc(meta(r)) + '</span></button>'; });
+  return h + '</div></div>';
+}
+function toast(text, ref){
+  const el = document.createElement('div'); el.className = 'toast';
+  el.innerHTML = '<span>' + esc(text) + '</span>' + (ref ? '<button type="button">Abrir</button>' : '');
+  if (ref) el.querySelector('button').onclick = () => { openRef(ref); el.remove(); };
+  $('#toasts').appendChild(el);
+  setTimeout(() => el.remove(), 5000);
+}
+
+/* navigation */
+function go(view){ S.view = view; ui.searchOpen = false; save(); render(); }
+function openRef(ref){
+  const {type, id} = parse(ref); const o = find(ref); if (!o) return;
+  if (type === 'email') { S.view = 'email'; S.sel.account = o.acc; S.sel.folder = o.folder; S.sel.email = id; o.unread = false; ui.replyOpen = false; }
+  if (type === 'message') { S.view = 'chat'; S.sel.channel = o.ch; ui.flashMsg = id; }
+  if (type === 'task') { S.view = 'tasks'; S.sel.task = id; S.sel.taskFilter = 'all'; }
+  if (type === 'ticket') { S.view = 'tickets'; S.sel.ticket = id; S.sel.ticketTab = 'all'; }
+  if (type === 'project') { S.view = 'projects'; S.sel.project = id; }
+  if (type === 'event') { S.view = 'calendar'; S.sel.event = id; }
+  if (type === 'doc') { S.view = 'docs'; S.sel.doc = id; S.sel.docFolder = o.folder; }
+  ui.searchOpen = false; ui.search = '';
+  save(); render();
+  if (type === 'message') setTimeout(() => { const el = document.getElementById('msg-' + id); if (el) el.scrollIntoView({block:'center'}); }, 30);
+}
+
+/* header */
+function header(){
+  const unreadEmail = S.emails.filter(e => e.unread && e.folder === 'Entrada').length;
+  const unreadChat = S.channels.reduce((n,c) => n + c.unread, 0);
+  const openTickets = S.tickets.filter(t => t.state === 'open').length;
+  const items = [['email','Email',unreadEmail],['chat','Chat',unreadChat],['projects','Projetos',0],['tasks','Tarefas',0],['tickets','Tickets',openTickets],['calendar','Calendário',0],['docs','Documentos',0]];
+  let nav = items.map(([v,l,c]) => '<button type="button" data-go="' + v + '"' + (S.view === v ? ' aria-current="page"' : '') + '>' + l + (c ? '<span class="badge">' + c + '</span>' : '') + '</button>').join('');
+  let res = '';
+  if (ui.searchOpen && ui.search.trim()) {
+    const r = searchAll(ui.search.trim());
+    res = '<div class="results" role="listbox">' + (r.length ? r.map((ref,i) => { const t = parse(ref).type; return '<button type="button" role="option" data-open="' + esc(ref) + '"' + (i === ui.hl ? ' class="hl"' : '') + '><span class="chip k-' + t + '">' + KIND[t] + '</span><span class="ell" style="flex:1">' + esc(title(ref)) + '</span></button>'; }).join('') : '<div class="empty">Nada encontrado para "' + esc(ui.search) + '".</div>') + '</div>';
+  }
+  const isDark = document.documentElement.getAttribute('data-theme') === 'dark' || (!document.documentElement.getAttribute('data-theme') && matchMedia('(prefers-color-scheme: dark)').matches);
+  return '<header class="top">' +
+    '<div class="brand"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--accent-text)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20L12 4l8 16"/><path d="M8 13h8"/></svg><span>Maat</span></div>' +
+    '<nav class="nav" aria-label="Módulos">' + nav + '</nav><div class="spacer"></div>' +
+    '<div class="search"><input id="search" type="search" aria-label="Procurar em tudo" placeholder="Procurar em tudo…" autocomplete="off" value="' + esc(ui.search) + '"><kbd>Ctrl+K</kbd>' + res + '</div>' +
+    '<div class="userbox"><button type="button" class="btn icon" data-act="theme" aria-label="' + (isDark ? 'Mudar para tema claro' : 'Mudar para tema escuro') + '">' + (isDark ? '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>' : '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>') + '</button>' +
+    '<span class="who-name muted">[Organização]</span><span class="who-name">Mozone</span>' +
+    '<button type="button" class="btn sm" data-act="reset" title="Repor os dados de demonstração">Repor demo</button></div>' +
+  '</header>';
+}
+function searchAll(q){
+  q = q.toLowerCase(); const out = [];
+  const push = (type, arr) => arr.forEach(o => { const r = type + ':' + o.id; if ((title(r) + ' ' + meta(r)).toLowerCase().includes(q)) out.push(r); });
+  push('email', S.emails); push('task', S.tasks); push('ticket', S.tickets); push('project', S.projects); push('doc', S.docs); push('event', S.events); push('message', S.messages);
+  return out.slice(0, 8);
+}
+
+/* EMAIL */
+function viewEmail(){
+  const sel = S.sel;
+  let side = '<aside class="side" aria-label="Contas e pastas"><button type="button" class="btn primary" data-act="compose" style="height:40px">Escrever</button>';
+  S.accounts.forEach(a => {
+    side += '<div><div class="group-title">' + esc(a.addr) + '</div><div class="navlist">';
+    ['Entrada','Enviados','Arquivo'].forEach(f => {
+      const n = S.emails.filter(e => e.acc === a.id && e.folder === f && (f !== 'Entrada' || e.unread)).length;
+      const cur = sel.account === a.id && sel.folder === f;
+      side += '<button type="button" data-folder="' + a.id + '|' + f + '"' + (cur ? ' aria-current="true"' : '') + '>' + f + (f === 'Entrada' && n ? '<span class="count">' + n + '</span>' : '') + '</button>';
+    });
+    side += '</div></div>';
+  });
+  side += '<div class="demo-note">Ligado por IMAP/SMTP. Neste protótipo os dados são de demonstração.</div></aside>';
+
+  let list = S.emails.filter(e => e.acc === sel.account && e.folder === sel.folder);
+  if (sel.emailFilter === 'unread') list = list.filter(e => e.unread);
+  if (sel.emailFilter === 'unlinked') list = list.filter(e => !linksOf('email:' + e.id).length);
+  const acc = S.accounts.find(a => a.id === sel.account);
+  let lp = '<section class="panel" style="width:380px;flex-shrink:0" aria-label="Mensagens"><div class="panel-head"><h1 style="flex:1;font-size:16px">' + esc(sel.folder) + ', ' + esc(acc.addr.split('@')[0]) + '@</h1>' +
+    '<button type="button" class="pill" data-efilter="unread" aria-pressed="' + (sel.emailFilter === 'unread') + '">Não lidos</button>' +
+    '<button type="button" class="pill" data-efilter="unlinked" aria-pressed="' + (sel.emailFilter === 'unlinked') + '">Sem ligação</button></div><div class="scroll">';
+  if (!list.length) lp += '<div class="empty">Nenhum email nesta pasta.</div>';
+  list.forEach(e => {
+    const ls = linksOf('email:' + e.id);
+    lp += '<button type="button" class="row" data-email="' + e.id + '"' + (sel.email === e.id ? ' aria-current="true"' : '') + '><span class="line1">' + (e.unread ? '<span class="dot" aria-label="Não lido"></span>' : '') + '<span class="who">' + esc(e.fromName) + '</span><span class="mono muted" style="font-size:12px">' + esc(e.when) + '</span></span><span class="txt">' + esc(e.subj) + '</span>' + (ls.length ? '<span class="lnk">Ligado a ' + esc(title(ls[0])) + (ls.length > 1 ? ' e mais ' + (ls.length - 1) : '') + '</span>' : '') + '</button>';
+  });
+  lp += '</div></section>';
+
+  const e = S.emails.find(x => x.id === sel.email && x.acc === sel.account && x.folder === sel.folder) || null;
+  let rp, aside = '';
+  if (!e) { rp = '<section class="panel grow"><div class="empty" style="margin:auto">Escolha um email na lista.</div></section>'; }
+  else {
+    const ref = 'email:' + e.id; const ls = linksOf(ref);
+    rp = '<section class="panel grow" aria-label="Email aberto"><div class="scroll">' +
+      '<div class="read-head"><h2>' + esc(e.subj) + '</h2><div class="muted">' + esc(e.fromName) + ' &lt;' + esc(e.from) + '&gt;, ' + esc(e.when) + '</div></div>' +
+      '<div class="actions"><span class="muted" style="font-size:13px">Converter em</span>' +
+      ['ticket','task','project','event'].map((t,i) => '<button type="button" class="btn ' + (i === 0 ? 'primary' : '') + '" data-convert="' + t + '" data-src="' + ref + '">' + KIND[t] + '</button>').join('') +
+      '<span class="spacer"></span><button type="button" class="btn" data-act="reply">Responder</button>' +
+      (e.folder !== 'Arquivo' ? '<button type="button" class="btn" data-act="archive">Arquivar</button>' : '') + '</div>' +
+      '<div class="body">' + e.body.split('\n\n').map(p => '<p>' + esc(p) + '</p>').join('') +
+      e.attach.map((a,i) => { const saved = ls.some(r => parse(r).type === 'doc' && title(r) === a.name); return '<div class="attach"><span class="chip k-doc">' + esc(a.type) + '</span><span style="flex:1">' + esc(a.name) + '</span>' + (saved ? '<span class="muted" style="font-size:13px">Guardado em Documentos</span>' : '<button type="button" class="btn sm" data-savedoc="' + i + '">Guardar em Documentos</button>') + '</div>'; }).join('') +
+      (ls.length ? '<div class="banner"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--accent-text)" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7 0l3-3a5 5 0 0 0-7-7l-1 1"/><path d="M14 11a5 5 0 0 0-7 0l-3 3a5 5 0 0 0 7 7l1-1"/></svg><span>Este email está ligado a ' + ls.map(r => '<button type="button" class="linkbtn" data-open="' + esc(r) + '">' + esc(title(r)) + '</button>').join(', ') + '.</span></div>' : '') +
+      (ui.replyOpen ? '<form data-form="reply" style="display:flex;flex-direction:column;gap:8px"><label class="field">Resposta para ' + esc(e.fromName) + '<textarea name="body" required placeholder="Escrever resposta…"></textarea></label><div style="display:flex;gap:8px;justify-content:flex-end"><button type="button" class="btn" data-act="cancelreply">Cancelar</button><button class="btn primary">Enviar</button></div></form>' : '') +
+      '</div></div></section>';
+    aside = '<aside class="aside">' + linksPanel(ref, 'Ligações deste email') +
+      '<div class="panel"><h2 class="sec-title">Remetente</h2><div style="padding:0 16px 14px;display:flex;flex-direction:column;gap:4px"><strong style="font-weight:500">' + esc(e.fromName) + '</strong><span class="muted" style="font-size:13px">' + S.emails.filter(x => x.from === e.from).length + ' emails trocados</span></div></div></aside>';
+  }
+  return '<main class="main">' + side + lp + rp + aside + '</main>';
+}
+
+/* CHAT */
+function viewChat(){
+  const ch = S.channels.find(c => c.id === S.sel.channel) || S.channels[0];
+  ch.unread = 0;
+  let side = '<aside class="side" aria-label="Canais">';
+  [['canal','Canais'],['dm','Mensagens diretas']].forEach(([k,l]) => {
+    side += '<div><div class="group-title">' + l + '</div><div class="navlist">' + S.channels.filter(c => c.kind === k).map(c => '<button type="button" data-channel="' + c.id + '"' + (c.id === ch.id ? ' aria-current="true"' : '') + '>' + esc(c.name) + (c.unread ? '<span class="count"><span class="badge">' + c.unread + '</span></span>' : '') + '</button>').join('') + '</div></div>';
+  });
+  side += '<button type="button" class="btn" data-act="newchannel" style="border-style:dashed">Novo canal</button></aside>';
+
+  const msgs = S.messages.filter(m => m.ch === ch.id);
+  let c = '<section class="panel grow" aria-label="Conversa"><div class="panel-head"><h1>' + esc(ch.name) + '</h1><span class="muted">' + (ch.kind === 'canal' ? 'Canal da equipa' : 'Mensagem direta') + '</span></div><div class="msgs" id="msgs">';
+  if (!msgs.length) c += '<div class="empty">Ainda não há mensagens. Escreva a primeira em baixo.</div>';
+  msgs.forEach(m => {
+    const ref = 'message:' + m.id; const ls = linksOf(ref).filter(r => r !== m.ref);
+    c += '<div class="msg' + (ui.flashMsg === m.id ? ' flash' : '') + '" id="msg-' + m.id + '">' + av(m.who, 'avatar') +
+      '<div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:3px"><div><strong style="font-weight:600">' + esc(PEOPLE[m.who].name) + '</strong> <span class="mono muted" style="font-size:12px">' + esc(m.when) + '</span></div>' +
+      '<div style="font-size:15px;color:var(--text-2)">' + esc(m.text) + '</div>' +
+      (m.ref && find(m.ref) ? '<button type="button" class="card-ref" data-open="' + esc(m.ref) + '"><span class="chip k-' + parse(m.ref).type + '" style="align-self:flex-start">' + KIND[parse(m.ref).type] + '</span><strong style="font-weight:500">' + esc(title(m.ref)) + '</strong><span class="muted" style="font-size:12px">' + esc(meta(m.ref)) + '</span></button>' : '') +
+      ls.map(r => '<button type="button" class="linkbtn" style="align-self:flex-start;font-size:12px;text-decoration:none" data-open="' + esc(r) + '">Virou ' + KIND[parse(r).type].toLowerCase() + ': ' + esc(title(r)) + '</button>').join('') +
+      '</div><div class="tools"><button type="button" class="btn sm primary" data-convert="task" data-src="' + ref + '">Converter em tarefa</button><button type="button" class="btn sm" style="background:var(--surface)" data-convert="ticket" data-src="' + ref + '">Ticket</button></div></div>';
+  });
+  c += '</div><form class="composer" data-form="chat"><input name="text" aria-label="Mensagem" placeholder="Mensagem para ' + esc(ch.name) + '" autocomplete="off"><button class="btn primary" style="height:44px">Enviar</button></form></section>';
+
+  const created = [];
+  msgs.forEach(m => linksOf('message:' + m.id).forEach(r => { if (r !== m.ref && !created.includes(r)) created.push(r); }));
+  let aside = '<aside class="aside"><div class="panel"><h2 class="sec-title">Criado a partir desta conversa</h2><div class="links">' +
+    (created.length ? created.map(r => '<button type="button" data-open="' + esc(r) + '"><span><span class="chip k-' + parse(r).type + '">' + KIND[parse(r).type] + '</span></span><span class="t">' + esc(title(r)) + '</span><span class="m">' + esc(meta(r)) + '</span></button>').join('') : '<div class="empty" style="padding:14px 16px;text-align:left">Passe o rato por uma mensagem para a converter em tarefa ou ticket.</div>') +
+    '</div></div><div class="panel"><h2 class="sec-title">Membros</h2><div style="padding:0 16px 12px;display:flex;flex-direction:column;gap:8px">' +
+    Object.keys(PEOPLE).map(k => '<div style="display:flex;align-items:center;gap:10px">' + av(k) + esc(PEOPLE[k].name) + '</div>').join('') + '</div></div></aside>';
+  return '<main class="main">' + side + c + aside + '</main>';
+}
+
+/* PROJECTS */
+function viewProjects(){
+  const p = S.projects.find(x => x.id === S.sel.project) || S.projects[0];
+  let side = '<aside class="side" aria-label="Projetos"><div class="group-title">Projetos ativos</div><div class="navlist">' +
+    S.projects.map(x => '<button type="button" data-project="' + x.id + '"' + (x.id === p.id ? ' aria-current="true"' : '') + ' style="flex-direction:column;align-items:flex-start;padding:8px 10px;gap:1px"><span>' + esc(x.name) + '</span><span class="muted" style="font-size:12px">' + S.tasks.filter(k => k.project === x.id).length + ' tarefas</span></button>').join('') +
+    '</div><button type="button" class="btn" data-act="newproject" style="border-style:dashed">Novo projeto</button></aside>';
+  const tasks = S.tasks.filter(k => k.project === p.id);
+  const pref = 'project:' + p.id;
+  const docs = S.docs.filter(d => d.folder === 'Projetos/' + p.name).length;
+  let head = '<div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap"><h1 style="margin:0;font-size:22px;font-weight:600">' + esc(p.name) + '</h1><span class="muted">' + tasks.length + ' tarefas, ' + docs + ' documentos' + (origin(pref) ? ', ' : '') + '</span>' + (origin(pref) ? '<button type="button" class="linkbtn" data-open="' + esc(origin(pref)) + '">origem: ' + esc(title(origin(pref))) + '</button>' : '') +
+    '<span class="spacer"></span><button type="button" class="btn primary" data-act="newtask">Nova tarefa</button></div>';
+  let board = '<div class="board">';
+  Object.keys(STATUS).forEach(st => {
+    const cards = tasks.filter(k => k.status === st);
+    board += '<section class="col" data-drop="' + st + '" aria-label="' + STATUS[st] + '"><h2>' + STATUS[st] + ' <span class="mono muted" style="font-size:12px;font-weight:400">' + cards.length + '</span></h2>';
+    cards.forEach(k => {
+      board += '<div class="kcard' + (st === 'done' ? ' done' : '') + '" draggable="true" data-drag="' + k.id + '" tabindex="0" role="button" aria-label="' + esc(k.title) + ', ' + STATUS[st] + '. Enter para abrir">' +
+        '<span class="ttl">' + esc(k.title) + '</span><span style="display:flex;gap:6px;flex-wrap:wrap;align-items:center">' + originChip('task:' + k.id) + '</span>' +
+        '<span style="display:flex;align-items:center;gap:8px">' + av(k.who) + '<span class="muted" style="font-size:12px' + (k.due != null && k.due < TODAY && st !== 'done' ? ';color:var(--late)' : '') + '">' + esc(dueLabel(k.due)) + '</span>' +
+        '<select aria-label="Mover para" data-move="' + k.id + '" style="margin-left:auto;font-size:12px;padding:3px 4px;background:var(--surface);border:1px solid var(--line);border-radius:4px">' + Object.keys(STATUS).map(s => '<option value="' + s + '"' + (s === st ? ' selected' : '') + '>' + STATUS[s] + '</option>').join('') + '</select></span></div>';
+    });
+    if (!cards.length) board += '<div class="muted" style="font-size:13px;padding:8px 4px">Arraste tarefas para aqui.</div>';
+    board += '</section>';
+  });
+  board += '</div>';
+  return '<main class="main">' + side + '<div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:14px;min-height:0">' + head + board + '</div></main>';
+}
+
+/* TASKS */
+function viewTasks(){
+  let tasks = S.tasks.slice();
+  if (S.sel.taskFilter === 'mine') tasks = tasks.filter(k => k.who === 'MZ');
+  const groups = [
+    ['Atrasadas', tasks.filter(k => k.status !== 'done' && k.due != null && k.due < TODAY), 'var(--late)'],
+    ['Hoje', tasks.filter(k => k.status !== 'done' && k.due === TODAY), ''],
+    ['Sem prazo', tasks.filter(k => k.status !== 'done' && k.due == null), ''],
+    ['Concluídas', tasks.filter(k => k.status === 'done'), '']
+  ];
+  let l = '<section class="panel grow" aria-label="Lista de tarefas"><div class="panel-head"><h1 style="flex:1">Tarefas</h1>' +
+    '<button type="button" class="pill" data-tfilter="mine" aria-pressed="' + (S.sel.taskFilter === 'mine') + '">Minhas</button>' +
+    '<button type="button" class="pill" data-tfilter="all" aria-pressed="' + (S.sel.taskFilter === 'all') + '">Equipa</button>' +
+    '<button type="button" class="btn primary" data-act="newtask">Nova tarefa</button></div>' +
+    '<div class="thead g-tasks"><span></span><span>Tarefa</span><span class="hide-sm">Projeto</span><span class="hide-sm">Origem</span><span>Prazo</span><span class="hide-sm">Quem</span></div><div class="scroll">';
+  groups.forEach(([gt, arr, color]) => {
+    if (!arr.length) return;
+    l += '<div style="padding:12px 16px 6px;font-size:13px;font-weight:600;color:' + (color || 'var(--muted)') + '">' + gt + ' <span class="mono" style="font-weight:400">' + arr.length + '</span></div>';
+    arr.forEach(k => {
+      const p = S.projects.find(x => x.id === k.project);
+      l += '<div class="trow g-tasks" data-task="' + k.id + '"' + (S.sel.task === k.id ? ' aria-current="true"' : '') + ' style="cursor:pointer">' +
+        '<input type="checkbox" class="chk" data-done="' + k.id + '" aria-label="Concluir ' + esc(k.title) + '"' + (k.status === 'done' ? ' checked' : '') + '>' +
+        '<button type="button" class="ell" data-task="' + k.id + '" style="border:0;background:none;padding:0;text-align:left;' + (k.status === 'done' ? 'text-decoration:line-through;color:var(--muted)' : '') + '">' + esc(k.title) + '</button>' +
+        '<span class="ell muted hide-sm">' + esc(p ? p.name : '') + '</span><span class="hide-sm">' + originChip('task:' + k.id) + '</span>' +
+        '<span class="mono" style="font-size:12px;' + (k.due != null && k.due < TODAY && k.status !== 'done' ? 'color:var(--late)' : 'color:var(--text-2)') + '">' + esc(dueLabel(k.due).replace(' (atrasada)','')) + '</span><span class="hide-sm">' + av(k.who) + '</span></div>';
+    });
+  });
+  if (!tasks.length) l += '<div class="empty">Sem tarefas. Crie uma ou converta um email ou mensagem.</div>';
+  l += '</div></section>';
+
+  const k = S.tasks.find(x => x.id === S.sel.task);
+  let d = '';
+  if (k) {
+    const ref = 'task:' + k.id; const o = origin(ref);
+    d = '<aside class="aside wide"><div class="panel"><div class="pad" style="border-bottom:1px solid var(--line)"><h2 style="margin:0;font-size:20px;font-weight:600">' + esc(k.title) + '</h2>' +
+      '<div class="detail-grid"><div><span class="muted">Estado</span><select data-tstatus="' + k.id + '" aria-label="Estado">' + Object.keys(STATUS).map(s => '<option value="' + s + '"' + (s === k.status ? ' selected' : '') + '>' + STATUS[s] + '</option>').join('') + '</select></div>' +
+      '<div><span class="muted">Prazo</span><select data-tdue="' + k.id + '" aria-label="Prazo"><option value="">Sem prazo</option>' + DAYS.map((dd,i) => '<option value="' + i + '"' + (k.due === i ? ' selected' : '') + '>' + dd.dow + ' ' + dd.num + (i === TODAY ? ' (hoje)' : '') + '</option>').join('') + '</select></div>' +
+      '<div><span class="muted">Projeto</span><button type="button" class="linkbtn" style="text-align:left" data-open="project:' + k.project + '">' + esc((S.projects.find(p => p.id === k.project) || {}).name || '') + '</button></div>' +
+      '<div><span class="muted">Responsável</span><select data-twho="' + k.id + '" aria-label="Responsável">' + Object.keys(PEOPLE).map(w => '<option value="' + w + '"' + (w === k.who ? ' selected' : '') + '>' + esc(PEOPLE[w].name) + '</option>').join('') + '</select></div></div></div>' +
+      '<div class="pad">' +
+      '<div style="display:flex;flex-direction:column;gap:8px"><h3 style="margin:0;font-size:13px;color:var(--muted)">Origem</h3>' +
+      (o ? '<button type="button" class="card-ref" style="max-width:none" data-open="' + esc(o) + '"><span class="chip k-' + parse(o).type + '" style="align-self:flex-start">' + KIND[parse(o).type] + ', ' + esc(meta(o)) + '</span><strong style="font-weight:500">' + esc(title(o)) + '</strong>' + (parse(o).type === 'email' ? '<span class="muted" style="font-size:13px">' + esc(find(o).body.slice(0,110)) + '…</span>' : '') + '</button>' : '<span class="muted">Criada manualmente.</span>') + '</div>' +
+      '<div style="display:flex;flex-direction:column;gap:8px"><h3 style="margin:0;font-size:13px;color:var(--muted)">Checklist</h3>' +
+      k.checklist.map((c,i) => '<label style="display:flex;gap:10px;align-items:center"><input type="checkbox" class="chk" data-check="' + k.id + '|' + i + '"' + (c.d ? ' checked' : '') + '><span' + (c.d ? ' class="muted" style="text-decoration:line-through"' : '') + '>' + esc(c.t) + '</span></label>').join('') +
+      '<form data-form="check" data-id="' + k.id + '" style="display:flex;gap:8px"><input name="t" aria-label="Novo item da checklist" placeholder="Adicionar item" style="flex:1;height:34px;padding:0 10px;background:var(--bg);border:1px solid var(--line);border-radius:6px"><button class="btn sm">Adicionar</button></form></div>' +
+      '<div style="display:flex;flex-direction:column;gap:8px"><h3 style="margin:0;font-size:13px;color:var(--muted)">Comentários</h3>' +
+      k.comments.map(c => '<div><strong style="font-weight:600">' + esc(PEOPLE[c.who].name) + '</strong> <span class="mono muted" style="font-size:12px">' + esc(c.when) + '</span><div style="color:var(--text-2)">' + esc(c.text) + '</div></div>').join('') +
+      '<form data-form="comment" data-id="' + k.id + '" style="display:flex;gap:8px"><input name="t" aria-label="Novo comentário" placeholder="Escrever comentário" style="flex:1;height:34px;padding:0 10px;background:var(--bg);border:1px solid var(--line);border-radius:6px"><button class="btn sm">Comentar</button></form></div>' +
+      '<div style="display:flex;gap:8px;flex-wrap:wrap"><button type="button" class="btn sm" data-convert="event" data-src="' + ref + '">Reservar tempo no calendário</button><button type="button" class="btn sm" data-convert="ticket" data-src="' + ref + '">Criar ticket</button></div>' +
+      '</div></div>' + linksPanel(ref) + '</aside>';
+  }
+  return '<main class="main">' + l + d + '</main>';
+}
+
+/* TICKETS */
+const TSTATE = {open:'Aberto', waiting:'Em espera', resolved:'Resolvido'};
+function stateChip(s){ const cls = s === 'open' ? 'k-ticket' : s === 'waiting' ? 'k-event' : 'k-manual'; return '<span class="chip ' + cls + '">' + TSTATE[s] + '</span>'; }
+function viewTickets(){
+  const tab = S.sel.ticketTab;
+  const counts = {open: S.tickets.filter(t => t.state === 'open').length, waiting: S.tickets.filter(t => t.state === 'waiting').length};
+  let list = S.tickets.slice().sort((a,b) => b.num - a.num);
+  if (tab !== 'all') list = list.filter(t => t.state === tab);
+  let l = '<section class="panel grow" aria-label="Lista de tickets"><div class="panel-head"><h1 style="margin-right:6px">Tickets</h1>' +
+    [['open','Abertos ' + counts.open],['waiting','Em espera ' + counts.waiting],['resolved','Resolvidos'],['all','Todos']].map(([k,lbl]) => '<button type="button" class="pill" data-ttab="' + k + '" aria-pressed="' + (tab === k) + '">' + lbl + '</button>').join('') +
+    '<span class="spacer"></span><button type="button" class="btn primary" data-act="newticket">Novo ticket</button></div>' +
+    '<div class="thead g-tickets"><span>N.º</span><span>Assunto</span><span class="hide-sm">Cliente</span><span>Estado</span><span class="hide-sm">Prioridade</span><span class="hide-sm">Quem</span></div><div class="scroll">';
+  if (!list.length) l += '<div class="empty">Nenhum ticket neste estado.</div>';
+  list.forEach(t => {
+    l += '<button type="button" class="trow g-tickets" data-ticket="' + t.id + '"' + (S.sel.ticket === t.id ? ' aria-current="true"' : '') + ' style="min-height:54px"><span class="mono muted">#' + String(t.num).padStart(4,'0') + '</span><span style="display:flex;flex-direction:column;min-width:0"><span class="ell">' + esc(t.title) + '</span><span style="margin-top:2px">' + originChip('ticket:' + t.id) + '</span></span><span class="ell hide-sm muted">' + esc(t.client) + '</span><span>' + stateChip(t.state) + '</span><span class="hide-sm" style="color:' + (t.prio === 'Alta' ? 'var(--warn)' : 'var(--text-2)') + '">' + t.prio + '</span><span class="hide-sm">' + av(t.who) + '</span></button>';
+  });
+  l += '</div></section>';
+  const t = S.tickets.find(x => x.id === S.sel.ticket);
+  let d = '';
+  if (t) {
+    const ref = 'ticket:' + t.id;
+    const dotC = {email:'var(--c-email)', ticket:'var(--c-ticket)', task:'var(--c-chat)', event:'var(--c-event)'};
+    d = '<aside class="aside wide"><div class="panel"><div class="pad" style="border-bottom:1px solid var(--line);gap:10px"><span class="mono muted">#' + String(t.num).padStart(4,'0') + ', ' + esc(t.client) + '</span><h2 style="margin:0;font-size:20px;font-weight:600">' + esc(t.title) + '</h2>' +
+      '<div class="detail-grid"><div><span class="muted">Estado</span><select data-tkstate="' + t.id + '" aria-label="Estado">' + Object.keys(TSTATE).map(s => '<option value="' + s + '"' + (s === t.state ? ' selected' : '') + '>' + TSTATE[s] + '</option>').join('') + '</select></div>' +
+      '<div><span class="muted">Prioridade</span><select data-tkprio="' + t.id + '" aria-label="Prioridade">' + ['Alta','Normal','Baixa'].map(p => '<option' + (p === t.prio ? ' selected' : '') + '>' + p + '</option>').join('') + '</select></div></div>' +
+      '<div style="display:flex;gap:8px;flex-wrap:wrap"><button type="button" class="btn sm" data-convert="task" data-src="' + ref + '">Criar tarefa</button><button type="button" class="btn sm" data-convert="event" data-src="' + ref + '">Marcar visita</button></div></div>' +
+      '<div class="pad"><h3 style="margin:0;font-size:13px;color:var(--muted)">Cronologia</h3><div class="timeline">' +
+      t.timeline.map(e => '<div class="tl"><div class="rail"><span class="pt" style="background:' + (dotC[e.c] || 'var(--muted)') + '"></span><span class="ln"></span></div><div class="c"><span class="muted" style="font-size:12px">' + esc(e.when) + ', ' + esc(e.kind) + '</span><span>' + esc(e.text) + '</span></div></div>').join('') +
+      '</div><form data-form="ticketreply" data-id="' + t.id + '" style="display:flex;flex-direction:column;gap:8px"><div class="seg" role="group" aria-label="Tipo de resposta"><button type="button" data-tmode="reply" aria-pressed="' + (ui.ticketMode === 'reply') + '">Responder ao cliente</button><button type="button" data-tmode="note" aria-pressed="' + (ui.ticketMode === 'note') + '">Nota interna</button></div>' +
+      '<label class="field">' + (ui.ticketMode === 'reply' ? 'Sai por email a partir de suporte@[domínio], na mesma conversa' : 'Só a equipa vê esta nota') + '<textarea name="body" required rows="3" placeholder="' + (ui.ticketMode === 'reply' ? 'Escrever resposta…' : 'Escrever nota…') + '"></textarea></label><button class="btn primary" style="align-self:flex-end">' + (ui.ticketMode === 'reply' ? 'Enviar resposta' : 'Guardar nota') + '</button></form></div></div>' +
+      linksPanel(ref) + '</aside>';
+  }
+  return '<main class="main">' + l + d + '</main>';
+}
+
+/* CALENDAR */
+function viewCalendar(){
+  const start = 8, end = 19, H = 60;
+  let side = '<aside class="side" aria-label="Calendários"><button type="button" class="btn primary" data-act="newevent" style="height:40px">Novo evento</button><div><div class="group-title">Calendários (CalDAV)</div>' +
+    [['team','Equipa','var(--cal-team)'],['support','suporte@[domínio]','var(--cal-support)'],['personal','Pessoal','var(--cal-personal)'],['task','Tempo reservado para tarefas','transparent']].map(([k,l,c]) => '<label style="display:flex;align-items:center;gap:10px;min-height:34px;padding:0 10px"><input type="checkbox" class="chk" data-cal="' + k + '"' + (S.cals[k] ? ' checked' : '') + '><span class="sw" style="background:' + c + (k === 'task' ? ';border:2px dashed var(--c-chat)' : '') + '"></span>' + l + '</label>').join('') + '</div>';
+  const unsched = S.tasks.filter(k => k.status !== 'done' && !linksOf('task:' + k.id).some(r => parse(r).type === 'event'));
+  side += '<div><div class="group-title">Tarefas sem tempo reservado</div><div style="display:flex;flex-direction:column;gap:6px">' +
+    unsched.slice(0,5).map(k => '<button type="button" class="card-ref" style="max-width:none" data-convert="event" data-src="task:' + k.id + '"><span>' + esc(k.title) + '</span><span class="muted" style="font-size:12px">' + esc(dueLabel(k.due)) + ', clicar para reservar</span></button>').join('') + '</div></div></aside>';
+
+  let cal = '<section class="panel grow cal" aria-label="Semana"><div class="panel-head"><h1 style="flex:1">21 a 25 de setembro de 2026</h1><div class="seg"><button type="button" aria-pressed="false" disabled>Dia</button><button type="button" aria-pressed="true">Semana</button><button type="button" aria-pressed="false" disabled>Mês</button></div></div>';
+  cal += '<div class="cal-head">' + DAYS.map((d,i) => '<div class="' + (i === TODAY ? 'today' : '') + '"><span style="font-size:12px" class="' + (i === TODAY ? '' : 'muted') + '">' + d.dow + '</span><span style="font-size:18px;font-weight:600">' + d.num + '</span></div>').join('') + '</div><div class="cal-body"><div class="hours">';
+  for (let h = start; h < end; h++) cal += '<div class="mono">' + String(h).padStart(2,'0') + ':00</div>';
+  cal += '</div>';
+  const now = new Date(); const nowH = now.getHours() + now.getMinutes() / 60;
+  DAYS.forEach((d,i) => {
+    cal += '<div class="day' + (i === TODAY ? ' today' : '') + '" data-day="' + i + '">';
+    for (let h = start; h < end; h++) cal += '<div class="slot"></div>';
+    S.events.filter(e => e.day === i && S.cals[e.cal]).forEach(e => {
+      const o = origin('event:' + e.id);
+      cal += '<button type="button" class="ev ' + e.cal + '" data-event="' + e.id + '"' + (S.sel.event === e.id ? ' aria-current="true"' : '') + ' style="top:' + ((e.start - start) * H + 2) + 'px;height:' + Math.max(26, (e.end - e.start) * H - 4) + 'px"><strong style="font-weight:500">' + esc(e.title) + '</strong><span style="font-size:11px;opacity:.85">' + hourLabel(e.start) + (o ? ', de: ' + (parse(o).type === 'message' ? 'Chat' : KIND[parse(o).type]) : '') + '</span></button>';
+    });
+    if (i === TODAY && nowH >= start && nowH <= end) cal += '<div class="now" style="top:' + ((nowH - start) * H) + 'px" aria-hidden="true"></div>';
+    cal += '</div>';
+  });
+  cal += '</div></section>';
+  let aside = '';
+  const ev = S.events.find(e => e.id === S.sel.event);
+  if (ev) {
+    aside = '<aside class="aside"><div class="panel"><div class="pad"><h2 style="margin:0;font-size:18px;font-weight:600">' + esc(ev.title) + '</h2><span class="muted">' + DAYS[ev.day].dow + ' ' + DAYS[ev.day].num + ' de setembro, ' + hourLabel(ev.start) + ' às ' + hourLabel(ev.end) + '</span><div style="display:flex;gap:8px"><button type="button" class="btn sm" data-act="delevent">Remover evento</button><button type="button" class="btn sm" data-act="closeevent">Fechar</button></div></div></div>' + linksPanel('event:' + ev.id) + '</aside>';
+  }
+  return '<main class="main">' + side + cal + aside + '</main>';
+}
+
+/* DOCS */
+function viewDocs(){
+  const groups = {};
+  S.docFolders.forEach(f => { const [g, n] = f.split('/'); (groups[g] = groups[g] || []).push({f, n}); });
+  let side = '<aside class="side" aria-label="Pastas">';
+  Object.keys(groups).forEach(g => {
+    side += '<div><div class="group-title">' + esc(g) + '</div><div class="navlist">' + groups[g].map(x => '<button type="button" data-dfolder="' + esc(x.f) + '"' + (S.sel.docFolder === x.f ? ' aria-current="true"' : '') + '><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" aria-hidden="true"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>' + esc(x.n) + '<span class="count">' + S.docs.filter(d => d.folder === x.f).length + '</span></button>').join('') + '</div></div>';
+  });
+  side += '</aside>';
+  const files = S.docs.filter(d => d.folder === S.sel.docFolder);
+  const [g, n] = S.sel.docFolder.split('/');
+  let l = '<section class="panel grow" aria-label="Ficheiros"><div class="panel-head"><nav aria-label="Caminho" style="flex:1;display:flex;gap:6px"><span class="muted">' + esc(g) + '</span><span class="muted">/</span><h1 style="font-size:15px">' + esc(n) + '</h1></nav><button type="button" class="btn primary" data-act="upload">Carregar</button></div>' +
+    '<div class="thead g-docs"><span>Nome</span><span class="hide-sm">Modificado</span><span>Ligado a</span></div><div class="scroll">';
+  if (!files.length) l += '<div class="empty">Esta pasta está vazia.</div>';
+  files.forEach(d => {
+    const ls = linksOf('doc:' + d.id);
+    l += '<button type="button" class="trow g-docs" data-doc="' + d.id + '"' + (S.sel.doc === d.id ? ' aria-current="true"' : '') + '><span style="display:flex;align-items:center;gap:10px;min-width:0"><span class="chip k-doc" style="width:46px;justify-content:center">' + esc(d.type) + '</span><span class="ell">' + esc(d.name) + '</span></span><span class="mono muted hide-sm" style="font-size:12px">' + esc(d.when) + '</span><span class="ell" style="color:var(--accent-text);font-size:13px">' + (ls.length ? esc(KIND[parse(ls[0]).type] + ': ' + title(ls[0])) + (ls.length > 1 ? ' +' + (ls.length - 1) : '') : '<span class="muted">sem ligações</span>') + '</span></button>';
+  });
+  l += '<div class="dropzone" id="dropzone">Arraste ficheiros para aqui ou use Carregar. No protótipo só o nome fica registado.</div></div></section>';
+  const d = S.docs.find(x => x.id === S.sel.doc && x.folder === S.sel.docFolder);
+  let aside = '';
+  if (d) {
+    aside = '<aside class="aside"><div class="panel"><div class="preview"><div class="page" aria-label="Pré-visualização"><i style="width:70%;height:9px;background:#b9c0c6"></i><i></i><i style="width:90%"></i><i style="width:95%"></i><i style="width:60%"></i><span style="margin-top:auto;font-size:11px;color:#5a636b;text-align:center">' + esc(d.type) + '</span></div></div>' +
+      '<div class="pad"><h2 style="margin:0;font-size:17px;font-weight:600;word-break:break-all">' + esc(d.name) + '</h2><div class="detail-grid"><div><span class="muted">Carregado por</span><span>' + esc(PEOPLE[d.by].name) + '</span></div><div><span class="muted">Quando</span><span>' + esc(d.when) + '</span></div></div>' +
+      '<button type="button" class="btn sm" data-act="linkdoc" style="align-self:flex-start">Ligar a…</button></div></div>' + linksPanel('doc:' + d.id) + '</aside>';
+  }
+  return '<main class="main">' + side + l + aside + '</main>';
+}
+
+/* modal */
+function modalHTML(){
+  const m = ui.modal; if (!m) return '';
+  let h = '<div class="backdrop" data-act="closemodal"><div class="modal" role="dialog" aria-modal="true" aria-labelledby="mtitle">';
+  const projOpts = sel => S.projects.map(p => '<option value="' + p.id + '"' + (p.id === sel ? ' selected' : '') + '>' + esc(p.name) + '</option>').join('');
+  const dayOpts = sel => DAYS.map((d,i) => '<option value="' + i + '"' + (i === sel ? ' selected' : '') + '>' + d.dow + ' ' + d.num + (i === TODAY ? ' (hoje)' : '') + '</option>').join('');
+  const hourOpts = sel => { let o = ''; for (let x = 8; x <= 18; x += 0.5) o += '<option value="' + x + '"' + (x === sel ? ' selected' : '') + '>' + hourLabel(x) + '</option>'; return o; };
+  const whoOpts = sel => Object.keys(PEOPLE).map(w => '<option value="' + w + '"' + (w === sel ? ' selected' : '') + '>' + esc(PEOPLE[w].name) + '</option>').join('');
+  const srcNote = m.src ? '<div class="banner" style="font-size:13px"><span>Fica ligado a: <strong style="font-weight:500">' + esc(KIND[parse(m.src).type]) + ', ' + esc(title(m.src)) + '</strong></span></div>' : '';
+  const T = m.target;
+  const defTitle = m.src ? (parse(m.src).type === 'email' ? find(m.src).subj : title(m.src).replace(/^#\d+ /,'')) : '';
+  if (m.kind === 'convert' || m.kind === 'new') {
+    const heading = (m.kind === 'convert' ? 'Converter em ' : 'Novo ') + (T === 'task' ? 'task' : T === 'ticket' ? 'ticket' : T === 'project' ? 'projeto' : 'evento');
+    h += '<h2 id="mtitle">' + (m.kind === 'new' && (T === 'task') ? 'Nova tarefa' : heading) + '</h2><form data-form="create">' + srcNote +
+      '<label class="field">' + (T === 'project' ? 'Nome do projeto' : 'Título') + '<input name="title" required value="' + esc(m.kind === 'convert' ? defTitle : '') + '"></label>';
+    if (T === 'task') h += '<div class="field-row"><label class="field">Projeto<select name="project">' + projOpts(m.project || S.sel.project) + '</select></label><label class="field">Responsável<select name="who">' + whoOpts('MZ') + '</select></label></div><label class="field">Prazo<select name="due"><option value="">Sem prazo</option>' + dayOpts(TODAY) + '</select></label>';
+    if (T === 'ticket') { const cl = m.src && parse(m.src).type === 'email' ? find(m.src).fromName : '[Cliente]'; h += '<div class="field-row"><label class="field">Cliente<input name="client" value="' + esc(cl) + '"></label><label class="field">Prioridade<select name="prio"><option>Alta</option><option selected>Normal</option><option>Baixa</option></select></label></div><label class="field">Responsável<select name="who">' + whoOpts('MZ') + '</select></label>'; }
+    if (T === 'event') h += '<div class="field-row"><label class="field">Dia<select name="day">' + dayOpts(TODAY) + '</select></label><label class="field">Hora<select name="start">' + hourOpts(10) + '</select></label></div><div class="field-row"><label class="field">Duração<select name="dur"><option value="0.5">30 min</option><option value="1" selected>1 hora</option><option value="1.5">1h30</option><option value="2">2 horas</option></select></label><label class="field">Calendário<select name="cal">' + (m.src && parse(m.src).type === 'task' ? '<option value="task">Tempo para tarefa</option>' : '') + '<option value="support">suporte@[domínio]</option><option value="team">Equipa</option><option value="personal">Pessoal</option></select></label></div>';
+    h += '<div class="foot"><button type="button" class="btn" data-act="closemodal">Cancelar</button><button class="btn primary">' + (m.kind === 'convert' ? 'Converter' : 'Criar') + '</button></div></form>';
+  }
+  if (m.kind === 'compose') {
+    h += '<h2 id="mtitle">Novo email</h2><form data-form="compose"><label class="field">De<select name="acc">' + S.accounts.map(a => '<option value="' + a.id + '">' + esc(a.addr) + '</option>').join('') + '</select></label><label class="field">Para<input name="to" type="text" required placeholder="nome@exemplo.pt"></label><label class="field">Assunto<input name="subj" required></label><label class="field">Mensagem<textarea name="body" required></textarea></label><div class="foot"><button type="button" class="btn" data-act="closemodal">Cancelar</button><button class="btn primary">Enviar</button></div></form>';
+  }
+  if (m.kind === 'linkdoc') {
+    const opts = [].concat(S.tickets.map(t => 'ticket:' + t.id), S.tasks.map(k => 'task:' + k.id), S.projects.map(p => 'project:' + p.id));
+    h += '<h2 id="mtitle">Ligar documento</h2><form data-form="linkdoc"><label class="field">Ligar a<select name="target">' + opts.map(r => '<option value="' + esc(r) + '">' + KIND[parse(r).type] + ': ' + esc(title(r)) + '</option>').join('') + '</select></label><div class="foot"><button type="button" class="btn" data-act="closemodal">Cancelar</button><button class="btn primary">Ligar</button></div></form>';
+  }
+  if (m.kind === 'channel') {
+    h += '<h2 id="mtitle">Novo canal</h2><form data-form="channel"><label class="field">Nome do canal<input name="name" required placeholder="ex.: projeto-x"></label><div class="foot"><button type="button" class="btn" data-act="closemodal">Cancelar</button><button class="btn primary">Criar canal</button></div></form>';
+  }
+  return h + '</div></div>';
+}
+
+/* render */
+function render(){
+  const views = {email:viewEmail, chat:viewChat, projects:viewProjects, tasks:viewTasks, tickets:viewTickets, calendar:viewCalendar, docs:viewDocs};
+  const focusedId = document.activeElement && document.activeElement.id;
+  const caret = focusedId === 'search' ? document.activeElement.selectionStart : null;
+  $('#app').innerHTML = header() + views[S.view]() + modalHTML();
+  if (focusedId === 'search') { const s = $('#search'); s.focus(); try { s.setSelectionRange(caret, caret); } catch(e){} }
+  if (ui.modal) { const f = document.querySelector('.modal input, .modal select, .modal textarea'); if (f) f.focus(); }
+  if (S.view === 'chat') { const m = $('#msgs'); if (m && !ui.flashMsg) m.scrollTop = m.scrollHeight; }
+  if (ui.flashMsg) setTimeout(() => { ui.flashMsg = null; }, 50);
+  document.title = 'Maat: ' + ({email:'Email', chat:'Chat', projects:'Projetos', tasks:'Tarefas', tickets:'Tickets', calendar:'Calendário', docs:'Documentos'})[S.view];
+}
+
+/* create items */
+function create(target, f, src){
+  let ref;
+  const t = nowHM();
+  if (target === 'task') {
+    const k = {id:nid('k'), title:f.title, project:f.project, status:'todo', due:f.due === '' ? null : +f.due, who:f.who, checklist:[], comments:[]};
+    S.tasks.push(k); ref = 'task:' + k.id;
+  }
+  if (target === 'ticket') {
+    S.ticketSeq++;
+    const k = {id:nid('t'), num:S.ticketSeq, title:f.title, client:f.client || '[Cliente]', state:'open', prio:f.prio, who:f.who, last:t, timeline:[]};
+    if (src) k.timeline.push({when:t, kind:KIND[parse(src).type] + ' convertido', text:title(src), c:parse(src).type === 'email' ? 'email' : 'task'});
+    k.timeline.push({when:t, kind:'Ticket criado', text:'Mozone criou o ticket', c:'ticket'});
+    S.tickets.push(k); ref = 'ticket:' + k.id;
+  }
+  if (target === 'project') {
+    const p = {id:nid('p'), name:f.title}; S.projects.push(p);
+    S.docFolders.push('Projetos/' + f.title); ref = 'project:' + p.id;
+  }
+  if (target === 'event') {
+    const e = {id:nid('v'), day:+f.day, start:+f.start, end:+f.start + +f.dur, title:f.title, cal:f.cal}; S.events.push(e); ref = 'event:' + e.id;
+  }
+  if (src) {
+    addLink(src, ref, true);
+    // propagate: if source task belongs to a ticket, link too
+    if (parse(src).type === 'ticket' && target === 'task') { const tk = find(src); tk.timeline.push({when:t, kind:'Tarefa ligada', text:f.title, c:'task'}); }
+  }
+  save();
+  return ref;
+}
+
+/* events */
+document.addEventListener('click', ev => {
+  const kc = ev.target.closest('.kcard');
+  if (kc && !ev.target.closest('select')) { openRef('task:' + kc.dataset.drag); return; }
+  const el = ev.target.closest('[data-go],[data-open],[data-act],[data-folder],[data-email],[data-efilter],[data-convert],[data-savedoc],[data-channel],[data-project],[data-task],[data-tfilter],[data-ticket],[data-ttab],[data-tmode],[data-event],[data-dfolder],[data-doc]');
+  if (!el) { if (ui.searchOpen && !ev.target.closest('.search')) { ui.searchOpen = false; render(); } return; }
+  const d = el.dataset;
+  if (d.act === 'closemodal') { if (ev.target !== el && el.classList.contains('backdrop')) return; ui.modal = null; render(); return; }
+  if (d.go) return go(d.go);
+  if (d.open) { ui.modal = null; return openRef(d.open); }
+  if (d.folder) { const [a,f] = d.folder.split('|'); S.sel.account = a; S.sel.folder = f; const first = S.emails.find(e => e.acc === a && e.folder === f); S.sel.email = first ? first.id : null; ui.replyOpen = false; save(); return render(); }
+  if (d.email) { return openRef('email:' + d.email); }
+  if (d.efilter) { S.sel.emailFilter = S.sel.emailFilter === d.efilter ? 'all' : d.efilter; save(); return render(); }
+  if (d.convert) { ui.modal = {kind:'convert', target:d.convert, src:d.src}; return render(); }
+  if (d.savedoc != null) {
+    const e = S.emails.find(x => x.id === S.sel.email); const a = e.attach[+d.savedoc];
+    const folder = S.docFolders.find(f => f.endsWith('/' + e.fromName)) || 'Organização/Geral';
+    const doc = {id:nid('d'), name:a.name, type:a.type, folder, when:'agora', by:'MZ'}; S.docs.push(doc);
+    addLink('email:' + e.id, 'doc:' + doc.id, true);
+    linksOf('email:' + e.id).filter(r => parse(r).type === 'ticket').forEach(r => addLink(r, 'doc:' + doc.id));
+    save(); render(); return toast('Guardado em Documentos, ' + folder, 'doc:' + doc.id);
+  }
+  if (d.channel) { S.sel.channel = d.channel; save(); return render(); }
+  if (d.project) { S.sel.project = d.project; save(); return render(); }
+  if (d.task && !ev.target.closest('input,select')) { S.sel.task = d.task; save(); return render(); }
+  if (d.tfilter) { S.sel.taskFilter = d.tfilter; save(); return render(); }
+  if (d.ticket) { S.sel.ticket = d.ticket; save(); return render(); }
+  if (d.ttab) { S.sel.ticketTab = d.ttab; save(); return render(); }
+  if (d.tmode) { ui.ticketMode = d.tmode; return render(); }
+  if (d.event) { S.sel.event = d.event; save(); return render(); }
+  if (d.dfolder) { S.sel.docFolder = d.dfolder; const f = S.docs.find(x => x.folder === d.dfolder); S.sel.doc = f ? f.id : null; save(); return render(); }
+  if (d.doc) { S.sel.doc = d.doc; save(); return render(); }
+  switch (d.act) {
+    case 'theme': {
+      const cur = document.documentElement.getAttribute('data-theme');
+      const dark = cur === 'dark' || (!cur && matchMedia('(prefers-color-scheme: dark)').matches);
+      const next = dark ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', next);
+      try { localStorage.setItem(THEME_KEY, next); } catch(e){}
+      return render();
+    }
+    case 'reset': if (confirm('Repor os dados de demonstração? As alterações feitas neste navegador perdem-se.')) { S = seed(); save(); ui = {search:'', searchOpen:false, hl:0, modal:null, flashMsg:null, replyOpen:false, ticketMode:'reply'}; render(); toast('Dados de demonstração repostos'); } return;
+    case 'compose': ui.modal = {kind:'compose'}; return render();
+    case 'reply': ui.replyOpen = true; render(); { const t = document.querySelector('[data-form="reply"] textarea'); if (t) t.focus(); } return;
+    case 'cancelreply': ui.replyOpen = false; return render();
+    case 'archive': { const e = S.emails.find(x => x.id === S.sel.email); e.folder = 'Arquivo'; const next = S.emails.find(x => x.acc === S.sel.account && x.folder === S.sel.folder); S.sel.email = next ? next.id : null; save(); render(); return toast('Email arquivado. As ligações mantêm-se.', 'email:' + e.id); }
+    case 'newchannel': ui.modal = {kind:'channel'}; return render();
+    case 'newproject': ui.modal = {kind:'new', target:'project'}; return render();
+    case 'newtask': ui.modal = {kind:'new', target:'task', project: S.view === 'projects' ? S.sel.project : null}; return render();
+    case 'newticket': ui.modal = {kind:'new', target:'ticket'}; return render();
+    case 'newevent': ui.modal = {kind:'new', target:'event'}; return render();
+    case 'upload': $('#fileInput').click(); return;
+    case 'linkdoc': ui.modal = {kind:'linkdoc'}; return render();
+    case 'delevent': { S.events = S.events.filter(e => e.id !== S.sel.event); S.links = S.links.filter(l => l.a !== 'event:' + S.sel.event && l.b !== 'event:' + S.sel.event); S.sel.event = null; save(); render(); return toast('Evento removido'); }
+    case 'closeevent': S.sel.event = null; save(); return render();
+  }
+});
+
+document.addEventListener('change', ev => {
+  const d = ev.target.dataset;
+  if (d.done) { const k = S.tasks.find(x => x.id === d.done); k.status = ev.target.checked ? 'done' : 'todo'; save(); render(); if (ev.target.checked) toast('Tarefa concluída: ' + k.title); return; }
+  if (d.move) { const k = S.tasks.find(x => x.id === d.move); k.status = ev.target.value; save(); render(); return toast(k.title + ' movida para ' + STATUS[k.status]); }
+  if (d.tstatus) { S.tasks.find(x => x.id === d.tstatus).status = ev.target.value; save(); return render(); }
+  if (d.tdue != null && ev.target.matches('[data-tdue]')) { S.tasks.find(x => x.id === d.tdue).due = ev.target.value === '' ? null : +ev.target.value; save(); return render(); }
+  if (d.twho) { S.tasks.find(x => x.id === d.twho).who = ev.target.value; save(); return render(); }
+  if (d.check) { const [id,i] = d.check.split('|'); const k = S.tasks.find(x => x.id === id); k.checklist[+i].d = ev.target.checked; save(); return render(); }
+  if (d.tkstate) { const t = S.tickets.find(x => x.id === d.tkstate); t.state = ev.target.value; t.timeline.push({when:nowHM(), kind:'Estado alterado', text:TSTATE[t.state], c:'ticket'}); save(); return render(); }
+  if (d.tkprio) { S.tickets.find(x => x.id === d.tkprio).prio = ev.target.value; save(); return render(); }
+  if (d.cal) { S.cals[d.cal] = ev.target.checked; save(); return render(); }
+  if (ev.target.id === 'fileInput') { addFiles(ev.target.files); ev.target.value = ''; }
+});
+
+function addFiles(list){
+  const arr = Array.from(list || []); if (!arr.length) return;
+  let last;
+  arr.forEach(f => { const ext = (f.name.split('.').pop() || 'FICH').toUpperCase().slice(0,4); const doc = {id:nid('d'), name:f.name, type:ext, folder:S.sel.docFolder, when:'agora', by:'MZ'}; S.docs.push(doc); last = doc; });
+  S.sel.doc = last.id; save(); render();
+  toast(arr.length === 1 ? 'Carregado: ' + arr[0].name : arr.length + ' ficheiros carregados');
+}
+
+document.addEventListener('submit', ev => {
+  ev.preventDefault();
+  const form = ev.target; const f = Object.fromEntries(new FormData(form).entries()); const kind = form.dataset.form;
+  if (kind === 'create') {
+    const m = ui.modal; const ref = create(m.target, f, m.src); ui.modal = null; render();
+    return toast((m.kind === 'convert' ? 'Convertido em ' : 'Criado: ') + KIND[parse(ref).type].toLowerCase(), ref);
+  }
+  if (kind === 'reply') {
+    const e = S.emails.find(x => x.id === S.sel.email);
+    const r = {id:nid('e'), acc:e.acc, folder:'Enviados', fromName:'Para: ' + e.fromName, from:(S.accounts.find(a => a.id === e.acc) || {}).addr, subj:'Re: ' + e.subj.replace(/^Re: /,''), when:'agora', unread:false, body:f.body, attach:[]};
+    S.emails.push(r); addLink('email:' + e.id, 'email:' + r.id);
+    linksOf('email:' + e.id).filter(x => parse(x).type === 'ticket').forEach(x => { addLink(x, 'email:' + r.id); find(x).timeline.push({when:nowHM(), kind:'Resposta enviada', text:f.body, c:'email'}); });
+    ui.replyOpen = false; save(); render(); return toast('Resposta enviada', 'email:' + r.id);
+  }
+  if (kind === 'compose') {
+    const r = {id:nid('e'), acc:f.acc, folder:'Enviados', fromName:'Para: ' + f.to, from:(S.accounts.find(a => a.id === f.acc) || {}).addr, subj:f.subj, when:'agora', unread:false, body:f.body, attach:[]};
+    S.emails.push(r); ui.modal = null; save(); render(); return toast('Email enviado', 'email:' + r.id);
+  }
+  if (kind === 'chat') {
+    const text = (f.text || '').trim(); if (!text) return;
+    const m = {id:nid('m'), ch:S.sel.channel, who:'MZ', when:nowHM(), text};
+    const mt = text.match(/#(\d{3,4})\b/); if (mt) { const tk = S.tickets.find(t => t.num === +mt[1]); if (tk) m.ref = 'ticket:' + tk.id; }
+    S.messages.push(m); save(); render(); const inp = document.querySelector('.composer input'); if (inp) inp.focus(); return;
+  }
+  if (kind === 'ticketreply') {
+    const t = S.tickets.find(x => x.id === form.dataset.id); const time = nowHM();
+    if (ui.ticketMode === 'reply') {
+      const r = {id:nid('e'), acc:'support', folder:'Enviados', fromName:'Para: ' + t.client, from:'suporte@[domínio]', subj:'Re: ' + t.title, when:'agora', unread:false, body:f.body, attach:[]};
+      S.emails.push(r); addLink('ticket:' + t.id, 'email:' + r.id);
+      t.timeline.push({when:time, kind:'Resposta enviada', text:f.body, c:'email'});
+      toast('Resposta enviada por email', 'email:' + r.id);
+    } else { t.timeline.push({when:time, kind:'Nota interna', text:f.body, c:'event'}); toast('Nota guardada'); }
+    t.last = time; save(); return render();
+  }
+  if (kind === 'check') { const k = S.tasks.find(x => x.id === form.dataset.id); if (f.t.trim()) k.checklist.push({t:f.t.trim(), d:false}); save(); return render(); }
+  if (kind === 'comment') { const k = S.tasks.find(x => x.id === form.dataset.id); if (f.t.trim()) k.comments.push({who:'MZ', when:nowHM(), text:f.t.trim()}); save(); return render(); }
+  if (kind === 'linkdoc') { addLink('doc:' + S.sel.doc, f.target); ui.modal = null; save(); render(); return toast('Documento ligado a ' + title(f.target), f.target); }
+  if (kind === 'channel') { const id = nid('ch'); S.channels.push({id, name:'# ' + f.name.replace(/^#\s*/,'').trim(), kind:'canal', unread:0}); S.sel.channel = id; ui.modal = null; save(); return render(); }
+});
+
+/* search */
+document.addEventListener('input', ev => {
+  if (ev.target.id === 'search') { ui.search = ev.target.value; ui.searchOpen = true; ui.hl = 0; render(); }
+});
+document.addEventListener('keydown', ev => {
+  if ((ev.ctrlKey || ev.metaKey) && ev.key.toLowerCase() === 'k') { ev.preventDefault(); const s = $('#search'); s.focus(); s.select(); return; }
+  if (ev.key === 'Escape') {
+    if (ui.modal) { ui.modal = null; render(); return; }
+    if (ui.searchOpen) { ui.searchOpen = false; ui.search = ''; render(); return; }
+  }
+  if (ev.target.id === 'search' && ui.searchOpen) {
+    const r = searchAll(ui.search.trim());
+    if (ev.key === 'ArrowDown') { ev.preventDefault(); ui.hl = Math.min(r.length - 1, ui.hl + 1); render(); }
+    if (ev.key === 'ArrowUp') { ev.preventDefault(); ui.hl = Math.max(0, ui.hl - 1); render(); }
+    if (ev.key === 'Enter' && r[ui.hl]) { ev.preventDefault(); openRef(r[ui.hl]); }
+    return;
+  }
+  const card = ev.target.closest && ev.target.closest('.kcard');
+  if (card && ev.key === 'Enter' && ev.target === card) { openRef('task:' + card.dataset.drag); }
+});
+
+/* drag & drop kanban + docs */
+let dragId = null;
+document.addEventListener('dragstart', ev => {
+  const c = ev.target.closest && ev.target.closest('[data-drag]'); if (!c) return;
+  dragId = c.dataset.drag; c.classList.add('dragging');
+  try { ev.dataTransfer.setData('text/plain', dragId); ev.dataTransfer.effectAllowed = 'move'; } catch(e){}
+});
+document.addEventListener('dragend', ev => { const c = ev.target.closest && ev.target.closest('[data-drag]'); if (c) c.classList.remove('dragging'); document.querySelectorAll('.col.over').forEach(x => x.classList.remove('over')); dragId = null; });
+document.addEventListener('dragover', ev => {
+  const col = ev.target.closest && ev.target.closest('[data-drop]');
+  const dz = ev.target.closest && ev.target.closest('#dropzone');
+  if (col && dragId) { ev.preventDefault(); document.querySelectorAll('.col.over').forEach(x => x !== col && x.classList.remove('over')); col.classList.add('over'); }
+  if (dz) { ev.preventDefault(); dz.classList.add('over'); }
+});
+document.addEventListener('dragleave', ev => { const dz = ev.target.closest && ev.target.closest('#dropzone'); if (dz) dz.classList.remove('over'); });
+document.addEventListener('drop', ev => {
+  const col = ev.target.closest && ev.target.closest('[data-drop]');
+  const dz = ev.target.closest && ev.target.closest('#dropzone');
+  if (col && dragId) {
+    ev.preventDefault(); const k = S.tasks.find(x => x.id === dragId);
+    if (k && k.status !== col.dataset.drop) { k.status = col.dataset.drop; save(); render(); toast(k.title + ' movida para ' + STATUS[k.status]); }
+    dragId = null; return;
+  }
+  if (dz) { ev.preventDefault(); dz.classList.remove('over'); if (ev.dataTransfer && ev.dataTransfer.files) addFiles(ev.dataTransfer.files); }
+});
+
+render();
+})();
+</script>
+</body>
+</html>
