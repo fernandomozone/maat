@@ -36,7 +36,7 @@ maat/
 
 | Peça | Versão proposta | Notas |
 |---|---|---|
-| Node.js | **24 LTS** (24.21.0) | O 26 é ainda "Current" e passa a LTS no fim de outubro de 2026; muda-se nessa altura |
+| Node.js | **26** (26.10.0) | Decidido a 2026-10-07. Passa a LTS a 2026-10-28, segundo o calendário oficial; manutenção até 2029-04-30 |
 | PostgreSQL | 18 (imagem oficial alpine) | Versão exata da imagem fixada na montagem |
 | Proxy | Caddy 2 (imagem oficial) | Certificados Let's Encrypt automáticos; desligável |
 
@@ -102,7 +102,6 @@ Verificado a 2026-10-07 no npm (versão, data, responsáveis, dependências dire
 ### 7. Para aprovar
 
 - A estrutura da secção 1.
-- Node 24 LTS agora, com passagem ao 26 quando este entrar em LTS.
 - As dependências das secções 3 e 4.
 - **Biome: sim ou não.**
 
@@ -138,7 +137,7 @@ maat/
 
 | Piece | Proposed version | Notes |
 |---|---|---|
-| Node.js | **24 LTS** (24.21.0) | 26 is still "Current" and becomes LTS at the end of October 2026; switch then |
+| Node.js | **26** (26.10.0) | Decided on 2026-10-07. Becomes LTS on 2026-10-28 per the official schedule; supported until 2029-04-30 |
 | PostgreSQL | 18 (official alpine image) | Exact image version pinned at setup |
 | Proxy | Caddy 2 (official image) | Automatic Let's Encrypt certificates; can be disabled |
 
@@ -204,6 +203,5 @@ Checked on 2026-10-07 on npm (version, date, maintainers, direct dependencies, l
 ### 7. To approve
 
 - The structure in section 1.
-- Node 24 LTS now, moving to 26 when it enters LTS.
 - The dependencies in sections 3 and 4.
 - **Biome: yes or no.**
