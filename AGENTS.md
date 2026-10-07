@@ -57,6 +57,7 @@ WhatsApp and Telegram integration, Git hosting, Google and Microsoft (OAuth) acc
 
 - Always use the latest **stable** version of each dependency, verified at the official source at install time, never from memory.
 - Before adding a library, check at the source: who maintains it, how many dependencies it pulls in, its security advisory history, and who depends on it.
+- **Every dependency needs the project owner's explicit approval before it is installed.** Phase 0 starts from an approved initial list; any library added after that (runtime or development) is proposed first, with the four checks and its license, and installed only once approved. Record approved dependencies and versions in `docs/architecture.md`.
 - A test that has never failed proves nothing: after it passes, deliberately break what it should catch and confirm it fails for that reason. When there are two defenses, test each one on its own.
 - Pin CI actions by commit SHA, not by tag.
 - Comments explain why, not what.
