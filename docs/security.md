@@ -38,6 +38,7 @@ Um controlo só passa a "provado" quando a prova existe e foi vista a falhar ao 
 | Credenciais de terceiros | Palavras-passe de email cifradas; chave em segredo do Docker; comando de troca da chave | 1 | Por fazer |
 | Email | HTML mostrado em área isolada, sem scripts; imagens externas bloqueadas por omissão | 1 | Por fazer |
 | Ficheiros | Servidos pela aplicação depois de verificar a organização; nomes que não se adivinham; limites de tamanho e tipo | 1 e 5 | Por fazer |
+| Validação de entrada | Toda a lista recebida de fora tem tamanho máximo (`.max()` no Zod); tamanho do corpo dos pedidos limitado no Fastify. Motivo: aviso de segurança do Zod de 2026-10-01, ainda sem correção | 0 | Por fazer |
 | Cadeia de fornecimento | Quatro verificações antes de cada biblioteca; ações de CI fixadas por commit; auditoria de dependências no CI | 0 | Por fazer |
 
 ### 4. RGPD
@@ -83,6 +84,7 @@ A control only becomes "proven" when the proof exists and has been seen to fail 
 | Third-party credentials | Mailbox passwords encrypted; key as a Docker secret; key rotation command | 1 | To do |
 | Email | HTML shown in an isolated area, without scripts; remote images blocked by default | 1 | To do |
 | Files | Served by the application after checking the organization; unguessable names; size and type limits | 1 and 5 | To do |
+| Input validation | Every array received from outside has a maximum length (`.max()` in Zod); request body size limited in Fastify. Reason: Zod security advisory of 2026-10-01, still unfixed | 0 | To do |
 | Supply chain | Four checks before each library; CI actions pinned by commit; dependency audit in CI | 0 | To do |
 
 ### 4. GDPR

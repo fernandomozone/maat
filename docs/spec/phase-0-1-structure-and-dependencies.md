@@ -2,7 +2,7 @@
 
 [Português](#português) · [English](#english)
 
-Estado / Status: **proposta, à espera de aprovação / proposal, awaiting approval** (2026-10-07)
+Estado / Status: **aprovado / approved** (2026-10-07)
 
 ---
 
@@ -83,7 +83,7 @@ Verificado a 2026-10-07 no npm (versão, data, responsáveis, dependências dire
 | vitest | 5.0.3 | Testes |
 | @playwright/test | 1.63.0 | Testes no browser |
 | @types/node, @types/pg, @types/react, @types/react-dom | 26.6.4, 8.23.1, 19.3.0, 19.3.0 | Tipos |
-| @biomejs/biome | 2.5.15 | **Opcional.** Formatação e regras de estilo do código, numa só ferramenta sem dependências |
+| @biomejs/biome | 2.5.15 | Formatação e regras de qualidade do código, numa só ferramenta sem dependências; verificado no CI. Aprovado porque quase todo o código é escrito por agentes, em várias sessões, e os PRs entram sozinhos |
 
 ### 5. Alternativas que ficaram de fora
 
@@ -99,11 +99,9 @@ Verificado a 2026-10-07 no npm (versão, data, responsáveis, dependências dire
 2. **Zod:** há um aviso alto, publicado a 2026-10-01, ainda sem versão corrigida: uma lista enorme enviada para um esquema de lista sem tamanho máximo pode esgotar a memória. Regra obrigatória: **toda a lista que venha de fora tem `.max()`**, e o tamanho do corpo dos pedidos é limitado no Fastify. Acompanhar a correção.
 3. **Responsáveis únicos:** zod, pg, argon2, otpauth e pg-boss são mantidos por uma pessoa cada. São bibliotecas muito usadas, mas é um risco a vigiar.
 
-### 7. Para aprovar
+### 7. Aprovação
 
-- A estrutura da secção 1.
-- As dependências das secções 3 e 4.
-- **Biome: sim ou não.**
+Aprovado a 2026-10-07: a estrutura, o Node 26 e todas as dependências das secções 3 e 4, incluindo o Biome.
 
 ---
 
@@ -184,7 +182,7 @@ Checked on 2026-10-07 on npm (version, date, maintainers, direct dependencies, l
 | vitest | 5.0.3 | Tests |
 | @playwright/test | 1.63.0 | Browser tests |
 | @types/node, @types/pg, @types/react, @types/react-dom | 26.6.4, 8.23.1, 19.3.0, 19.3.0 | Types |
-| @biomejs/biome | 2.5.15 | **Optional.** Code formatting and style rules, in one tool with no dependencies |
+| @biomejs/biome | 2.5.15 | Code formatting and quality rules, in one tool with no dependencies; checked in CI. Approved because almost all code is written by agents, across several sessions, and PRs merge automatically |
 
 ### 5. Alternatives left out
 
@@ -200,8 +198,6 @@ Checked on 2026-10-07 on npm (version, date, maintainers, direct dependencies, l
 2. **Zod:** a high-severity advisory published on 2026-10-01, still without a fixed release: a huge array sent to an array schema with no maximum length can exhaust memory. Mandatory rule: **every array that comes from outside has `.max()`**, and request body size is limited in Fastify. Watch for the fix.
 3. **Single maintainers:** zod, pg, argon2, otpauth and pg-boss are each maintained by one person. They are widely used, but it is a risk to watch.
 
-### 7. To approve
+### 7. Approval
 
-- The structure in section 1.
-- The dependencies in sections 3 and 4.
-- **Biome: yes or no.**
+Approved on 2026-10-07: the structure, Node 26 and every dependency in sections 3 and 4, including Biome.
