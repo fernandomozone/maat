@@ -67,4 +67,6 @@ WhatsApp and Telegram integration, Git hosting, Google and Microsoft (OAuth) acc
 - **Every dependency needs the project owner's explicit approval before it is installed.** Phase 0 starts from an approved initial list; any library added after that (runtime or development) is proposed first, with the four checks and its license, and installed only once approved. Record approved dependencies and versions in `docs/architecture.md`.
 - A test that has never failed proves nothing: after it passes, deliberately break what it should catch and confirm it fails for that reason. When there are two defenses, test each one on its own.
 - Pin CI actions by commit SHA, not by tag.
+- Run Biome (format and lint) before every commit; CI fails on any Biome error.
+- Every Zod array schema for external input has `.max()`, and Fastify limits the request body size (open Zod advisory of 2026-10-01). Never run Fastify below 5.12.5.
 - Comments explain why, not what.

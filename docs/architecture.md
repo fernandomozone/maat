@@ -41,7 +41,10 @@ Quando duas escolhas colidem, ganha a que está mais acima.
 | Credenciais IMAP/SMTP | Cifradas na base de dados; a chave é um segredo do Docker, fora da base de dados e fora do backup, com comando para a trocar | Guardamos credenciais de terceiros: uma cópia da base de dados sozinha não as revela |
 | Ficheiros | Disco do servidor, num volume Docker, atrás de uma interface própria de armazenamento (guardar, ler, apagar) | Como o Mailcow faz com o email: zero serviços extra, e a cópia de segurança é o volume mais o dump da base de dados. Se um dia for preciso S3, acrescenta-se outra implementação da interface sem mexer no resto |
 | Testes | Vitest e Playwright | |
+| Qualidade do código | Biome (formatação e regras), verificado no CI | Quase todo o código é escrito por agentes, em várias sessões |
 | Operação | Docker Compose, instalado num servidor próprio; proxy com HTTPS automático (desligável); scripts de backup e de atualização | Como o Mailcow: um projeto com todos os serviços em contentores. Sem armazenamento nem serviços geridos de terceiros |
+
+**Dependências aprovadas:** a lista, com versões e verificações, está em [spec/phase-0-1-structure-and-dependencies.md](spec/phase-0-1-structure-and-dependencies.md). Qualquer dependência nova precisa de aprovação.
 
 ### 3. Isolamento entre organizações
 
@@ -120,7 +123,10 @@ When two choices collide, the higher one wins.
 | IMAP/SMTP credentials | Encrypted in the database; the key is a Docker secret, outside the database and outside the backup, with a rotation command | We store third-party credentials: a copy of the database alone does not reveal them |
 | Files | Server disk, in a Docker volume, behind our own storage interface (put, get, delete) | Like Mailcow does with mail: no extra service, and backup is the volume plus the database dump. If S3 is ever needed, another implementation of the interface is added without touching the rest |
 | Tests | Vitest and Playwright | |
+| Code quality | Biome (formatting and rules), checked in CI | Almost all code is written by agents, across several sessions |
 | Operations | Docker Compose, installed on one's own server; reverse proxy with automatic HTTPS (can be disabled); backup and update scripts | Like Mailcow: one project with every service in containers. No managed third-party storage or services |
+
+**Approved dependencies:** the list, with versions and checks, is in [spec/phase-0-1-structure-and-dependencies.md](spec/phase-0-1-structure-and-dependencies.md). Any new dependency needs approval.
 
 ### 3. Isolation between organizations
 
