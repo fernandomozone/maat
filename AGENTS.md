@@ -53,6 +53,13 @@ WhatsApp and Telegram integration, Git hosting, Google and Microsoft (OAuth) acc
 - Before adding a dependency, check that its license is compatible with AGPL-3.0-only (permissive licenses such as MIT, BSD, Apache-2.0, ISC and MPL-2.0 are fine). Flag anything else, and any proprietary or "source-available" license, instead of adding it.
 - Do not accept or merge external contributions until a contributor agreement policy is decided.
 
+## Workflow
+
+- Work happens both in the cloud and on the owner's machine. **Never commit directly to `main`.** Each task gets its own branch and reaches `main` through a pull request.
+- A pull request **merges automatically once all CI checks pass**, with one exception: a pull request that adds or upgrades a dependency waits for the owner's explicit approval.
+- Always pull the latest `main` before starting a branch.
+- Local development ports (fixed, so they never collide with other local projects): backend **3002**, frontend **5175**, PostgreSQL **5434**.
+
 ## Engineering practices
 
 - Always use the latest **stable** version of each dependency, verified at the official source at install time, never from memory.
