@@ -31,7 +31,7 @@ Build order: follow the phases in [docs/roadmap.md](docs/roadmap.md), one at a t
 ## Users and security
 
 - Read [docs/security.md](docs/security.md) before touching authentication, sessions, access control, RLS, credentials, files, audit or backups. A phase does not close while its controls there are unproven.
-- One account belongs to one organization. Departments and teams up to two levels; team heads see their team's work and shared mailboxes, never personal mailboxes.
+- One account belongs to one organization for now, but keep **person** and **organization membership** as separate tables so multi-organization membership can be added later without a schema rework. Nothing ties an organization to a single email domain. Design the API so scoped, revocable, expiring API keys can be added later. Departments and teams up to two levels; team heads see their team's work and shared mailboxes, never personal mailboxes.
 - Never write email or message content to the audit log or to application logs.
 
 ## Out of scope for now

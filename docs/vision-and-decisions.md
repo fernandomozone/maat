@@ -64,7 +64,11 @@ Exemplos:
 
 **Administrador da plataforma.** Papel à parte (pode ser o técnico de TI): gere utilizadores, estrutura, contas de email e definições.
 
-**Uma conta, uma empresa.** Quem trabalha para duas empresas tem duas contas.
+**Uma conta, uma empresa.** Quem trabalha para duas empresas tem duas contas. Mas o modelo de dados separa desde já a **pessoa** da sua **pertença a uma organização**, para mais tarde a mesma pessoa poder pertencer a várias organizações da mesma instalação sem refazer a base de dados (2026-10-07).
+
+**Várias contas de email, vários domínios.** Uma pessoa pode ter contas de domínios diferentes; nada prende uma organização a um só domínio. O caso de um prestador de serviços resolve-se na primeira versão com todas as contas na organização dele.
+
+**API desenhada para chaves com âmbito.** Mais tarde, uma Maat poderá dar a outra (por exemplo, a de um subcontratado) uma chave de API limitada, revogável e com prazo, para trocar tickets e o trabalho feito. A API nasce a pensar nisso.
 
 **Entrada.** Email e palavra-passe **próprios da Maat**, independentes da palavra-passe do email. MFA por **TOTP**, com códigos de recuperação. Cada empresa decide se o MFA é obrigatório para todos; para administradores é **sempre obrigatório**. Passkeys ficam para mais tarde.
 
@@ -162,7 +166,11 @@ Examples:
 
 **Platform administrator.** A separate role (can be the IT technician): manages users, structure, email accounts and settings.
 
-**One account, one company.** Someone who works for two companies has two accounts.
+**One account, one company.** Someone who works for two companies has two accounts. But the data model separates the **person** from their **membership in an organization** from the start, so that later the same person can belong to several organizations in the same installation without reworking the database (2026-10-07).
+
+**Several email accounts, several domains.** A person can have accounts on different domains; nothing ties an organization to a single domain. A service provider's case is handled in the first version with all their accounts in their own organization.
+
+**API designed for scoped keys.** Later, one Maat may give another (for example, a subcontractor's) a limited, revocable, expiring API key to exchange tickets and the work done. The API is designed with this in mind from the start.
 
 **Login.** Email and a **Maat-specific password**, independent of the mailbox password. MFA with **TOTP**, plus recovery codes. Each company decides whether MFA is mandatory for everyone; for administrators it is **always mandatory**. Passkeys come later.
 
