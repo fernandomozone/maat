@@ -45,6 +45,10 @@ Em [`prototype/index.html`](prototype/index.html) há um protótipo interativo c
 - [Levantamento da stack técnica](docs/tech-stack-research.md): o que existe para reaproveitar, módulo a módulo, em cada linguagem candidata.
 - [AGENTS.md](AGENTS.md): convenções para agentes de IA que trabalhem no projeto (em inglês).
 
+### Licença
+
+[GNU Affero General Public License v3.0](LICENSE) (AGPL-3.0-only). Pode usar, estudar, alterar e partilhar a Maat. Quem distribuir uma versão alterada, ou a disponibilizar a terceiros como serviço, tem de publicar o código dessa versão sob a mesma licença.
+
 ---
 
 ## English
@@ -87,3 +91,7 @@ The core concept: everything is an **item** with an origin and links. Converting
 - [Architecture](docs/architecture.md): the stack, isolation between organizations and good practices.
 - [Tech stack research](docs/tech-stack-research.md): what exists to reuse, module by module, in each candidate language.
 - [AGENTS.md](AGENTS.md): conventions for AI agents working on the project.
+
+### License
+
+[GNU Affero General Public License v3.0](LICENSE) (AGPL-3.0-only). You may use, study, change and share Maat. Anyone who distributes a modified version, or offers it to others as a service, must publish that version's source code under the same license.

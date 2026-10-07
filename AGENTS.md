@@ -45,6 +45,12 @@ WhatsApp and Telegram integration, Git hosting, Google and Microsoft (OAuth) acc
 - When unsure about a requirement, ask instead of assuming.
 - This repository is self-contained. Do not reference, link to or copy code or documents from other projects, including private ones; rewrite patterns from scratch, in English.
 
+## License
+
+- The project is licensed under **AGPL-3.0-only** ([LICENSE](LICENSE)). Every new source file starts with the header `// SPDX-License-Identifier: AGPL-3.0-only` (or the equivalent comment syntax).
+- Before adding a dependency, check that its license is compatible with AGPL-3.0-only (permissive licenses such as MIT, BSD, Apache-2.0, ISC and MPL-2.0 are fine). Flag anything else, and any proprietary or "source-available" license, instead of adding it.
+- Do not accept or merge external contributions until a contributor agreement policy is decided.
+
 ## Engineering practices
 
 - Always use the latest **stable** version of each dependency, verified at the official source at install time, never from memory.
