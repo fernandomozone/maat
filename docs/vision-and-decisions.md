@@ -52,6 +52,13 @@ Exemplos:
 
 **Língua da interface (2026-10-06).** A Maat lança só em português europeu (pt-PT), mas com os textos num ficheiro de traduções desde o primeiro ecrã: o código usa chaves, nunca texto escrito diretamente. No futuro: inglês e, talvez, português do Brasil (pt-BR) como língua separada. Datas, horas, números e fusos horários seguem as definições de cada utilizador.
 
+**Modelo de distribuição e de negócio (2026-10-07).** Duas formas de usar a Maat:
+- **Instalação própria:** gratuita e sem limites (a AGPL não permite impor limites a quem instala). Rendimento por **suporte pago** (instalação, atualizações, manutenção).
+- **Serviço alojado pelo dono do projeto:** multi-organização, num servidor próprio dele na Hetzner. **Gratuito até 5 utilizadores e 1 GB de disco**; quando se ultrapassa qualquer um dos dois, passa a pago. Pagamentos pelo **Stripe**. Registo público no site. O painel de gestão e a faturação podem correr numa máquina virtual à parte. Como guarda emails de outras empresas, o dono do serviço é subcontratante no sentido do RGPD (art. 28.º) e precisa de um contrato de tratamento de dados com cada cliente.
+- Mais tarde, possível **licença comercial** para quem não queira cumprir a AGPL.
+
+O serviço alojado é uma fase **depois** da primeira versão. A faturação e os limites ficam num módulo **desligado por omissão**, que quem instala no seu servidor nunca vê.
+
 **Licença (2026-10-07).** AGPL-3.0-only, em todo o repositório (código e documentação). Protege o modelo de serviço gerido: quem oferecer a Maat como serviço com alterações tem de as publicar. Enquanto o dono do projeto for o único titular dos direitos, pode mudar a licença das versões futuras ou vender licenças comerciais; as versões já publicadas continuam AGPL para quem as recebeu. Se houver contribuições externas, decide-se antes se é preciso um acordo de cedência (CLA).
 
 **Línguas.** Documentação em português e inglês no mesmo ficheiro; código em inglês. As instruções para agentes de IA ficam em `AGENTS.md` (em inglês); o projeto não usa `CLAUDE.md`.
@@ -102,7 +109,6 @@ Exemplos:
 
 ### Questões em aberto
 
-- **Modelo de distribuição.** Instalação pelo próprio cliente, alojamento gerido com uma instalação por cliente, ou plataforma multi-empresa. Por decidir depois de a plataforma estar em uso.
 
 ---
 
@@ -154,7 +160,14 @@ Examples:
 
 **Interface language (2026-10-06).** Maat launches in European Portuguese (pt-PT) only, but with interface text in a translation file from the very first screen: code uses keys, never hard-coded text. Later: English and possibly Brazilian Portuguese (pt-BR) as a separate language. Dates, times, numbers and time zones follow each user's settings.
 
-**License (2026-10-07).** AGPL-3.0-only across the whole repository (code and documentation). It protects the managed-service model: anyone offering Maat as a service with changes must publish them. While the project owner is the sole copyright holder, they can relicense future versions or sell commercial licenses; versions already published remain AGPL for those who received them. If external contributions arrive, decide first whether a contributor agreement (CLA) is needed.
+**Distribution and business model (2026-10-07).** Two ways to use Maat:
+- **Self-hosted:** free and unlimited (AGPL does not allow imposing limits on self-hosters). Revenue from **paid support** (installation, updates, maintenance).
+- **Service hosted by the project owner:** multi-organization, on the owner's own server at Hetzner. **Free up to 5 users and 1 GB of disk**; exceeding either one makes it paid. Payments through **Stripe**. Public sign-up on the website. The management panel and billing may run on a separate virtual machine. Because it stores other companies' email, the service owner is a processor under GDPR (art. 28) and needs a data processing agreement with each customer.
+- Later, a possible **commercial license** for those who do not want to comply with the AGPL.
+
+The hosted service is a phase **after** the first version. Billing and limits live in a module **disabled by default**, never seen by self-hosters.
+
+**License (2026-10-07). AGPL-3.0-only across the whole repository (code and documentation). It protects the managed-service model: anyone offering Maat as a service with changes must publish them. While the project owner is the sole copyright holder, they can relicense future versions or sell commercial licenses; versions already published remain AGPL for those who received them. If external contributions arrive, decide first whether a contributor agreement (CLA) is needed.
 
 **Languages.** Documentation in Portuguese and English in the same file; code in English. Instructions for AI agents live in `AGENTS.md` (in English); the project does not use `CLAUDE.md`.
 
@@ -204,4 +217,3 @@ Examples:
 
 ### Open questions
 
-- **Distribution model.** Self-installed by the customer, managed hosting with one instance per customer, or a multi-tenant platform. To be decided once the platform is in use.

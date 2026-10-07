@@ -36,6 +36,8 @@ Build order: follow the phases in [docs/roadmap.md](docs/roadmap.md), one at a t
 
 ## Out of scope for now
 
+- Billing, Stripe, plan limits and public sign-up belong to the hosted-service phase after the first version. When built, they live in a separate module disabled by default; the core must never depend on them.
+
 WhatsApp and Telegram integration, Git hosting, Google and Microsoft (OAuth) accounts, Active Directory/LDAP, passkeys, one account across several organizations. Do not add these unless the decision record changes.
 
 ## Repository hygiene

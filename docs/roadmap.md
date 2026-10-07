@@ -75,6 +75,14 @@ Ordem de construção da primeira versão, decidida a 2026-10-06 ([issue #4](htt
 
 **Feito quando:** a equipa conversa na Maat em vez de noutra aplicação.
 
+### Depois da primeira versão: serviço alojado
+
+- Instalação multi-organização no servidor do dono do projeto.
+- Registo público, limites (5 utilizadores e 1 GB gratuitos), faturação com Stripe, painel de gestão (possivelmente numa máquina virtual à parte).
+- Contrato de tratamento de dados (RGPD, art. 28.º) para os clientes.
+
+**Feito quando:** uma empresa externa se regista, usa o plano gratuito e passa a pago sem intervenção manual.
+
 ---
 
 ## English
@@ -147,3 +155,11 @@ Build order for the first version, decided on 2026-10-06 ([issue #4](https://git
 - **Links:** convert a message into a task or ticket.
 
 **Done when:** the team talks in Maat instead of another app.
+
+### After the first version: hosted service
+
+- Multi-organization installation on the project owner's server.
+- Public sign-up, limits (5 users and 1 GB free), Stripe billing, management panel (possibly on a separate virtual machine).
+- Data processing agreement (GDPR, art. 28) for customers.
+
+**Done when:** an outside company signs up, uses the free plan and upgrades to paid without manual intervention.
