@@ -62,6 +62,13 @@ O mesmo código, com dois pontos de entrada:
 - **API**: o Fastify que serve o frontend e a API.
 - **Sincronização**: um processo à parte que mantém as ligações IMAP abertas (IDLE), sincroniza calendários e envia email. Assim, uma conta lenta ou com erro não pesa na API.
 
+### 4-B. Instalação de referência
+
+A instalação usada no desenvolvimento (Fases 0 a 6), que pode crescer depois para o serviço alojado:
+
+- Uma máquina virtual **só para a Maat**, separada do servidor de email, e cujo processamento se pode aumentar sem reinstalar.
+- **Os dados num disco à parte** (volume de blocos montado na VM): a base de dados e as pastas de ficheiros. Assim cresce-se o disco e a máquina de forma independente.
+
 ### 5. Por decidir
 
 Nada nesta camada. As questões de produto em aberto estão em [vision-and-decisions.md](vision-and-decisions.md).
@@ -133,6 +140,13 @@ The same codebase, with two entry points:
 
 - **API**: the Fastify server for the frontend and the API.
 - **Sync**: a separate process that keeps IMAP connections open (IDLE), syncs calendars and sends mail. A slow or failing account does not weigh on the API.
+
+### 4-B. Reference installation
+
+The installation used during development (Phases 0 to 6), which can later grow into the hosted service:
+
+- A virtual machine **for Maat only**, separate from the mail server, whose compute can be resized without reinstalling.
+- **Data on a separate disk** (a block volume attached to the VM): the database and the file folders. Disk and machine grow independently.
 
 ### 5. Still open
 
