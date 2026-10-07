@@ -167,7 +167,7 @@ Examples:
 
 The hosted service is a phase **after** the first version. Billing and limits live in a module **disabled by default**, never seen by self-hosters.
 
-**License (2026-10-07). AGPL-3.0-only across the whole repository (code and documentation). It protects the managed-service model: anyone offering Maat as a service with changes must publish them. While the project owner is the sole copyright holder, they can relicense future versions or sell commercial licenses; versions already published remain AGPL for those who received them. If external contributions arrive, decide first whether a contributor agreement (CLA) is needed.
+**License (2026-10-07).** AGPL-3.0-only across the whole repository (code and documentation). It protects the managed-service model: anyone offering Maat as a service with changes must publish them. While the project owner is the sole copyright holder, they can relicense future versions or sell commercial licenses; versions already published remain AGPL for those who received them. If external contributions arrive, decide first whether a contributor agreement (CLA) is needed.
 
 **Languages.** Documentation in Portuguese and English in the same file; code in English. Instructions for AI agents live in `AGENTS.md` (in English); the project does not use `CLAUDE.md`.
 
